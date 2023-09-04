@@ -7,7 +7,7 @@ function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <BurgerIngredients ingredients={data} />
+      <BurgerIngredients data={data} />
     </div>
   );
 }

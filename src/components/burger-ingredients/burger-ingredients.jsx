@@ -1,72 +1,96 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import styles from "./burger-ingredients.module.css";
-import {
-  Counter,
-  Tab,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+// BurgerIngredients.js
 
-const BurgerIngredients = ({ ingredients }) => {
+import IngredientCard from "./ingredient-card/ingredient-card";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import React, { useState, useEffect } from "react";
+
+const BurgerIngredients = ({ data }) => {
   const [currentTab, setCurrentTab] = useState("bun");
 
+  const handleTabClick = (tab) => {
+    setCurrentTab(tab);
+    const element = document.getElementById(tab);
+    element.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const bunElement = document.getElementById("bun").offsetTop;
+      const sauceElement = document.getElementById("sauce").offsetTop;
+      const mainElement = document.getElementById("main").offsetTop;
+      const scrollPosition = window.scrollY;
+
+      if (scrollPosition >= mainElement - 50) {
+        setCurrentTab("main");
+      } else if (scrollPosition >= sauceElement - 50) {
+        setCurrentTab("sauce");
+      } else if (scrollPosition >= bunElement - 50) {
+        setCurrentTab("bun");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <section className={styles.burger_ingredietns}>
+    <div>
       <div style={{ display: "flex" }}>
         <Tab
           value="bun"
           active={currentTab === "bun"}
-          onClick={() => setCurrentTab("bun")}
+          onClick={() => handleTabClick("bun")}
         >
-          Булки
-        </Tab>
-        <Tab
-          value="main"
-          active={currentTab === "main"}
-          onClick={() => setCurrentTab("main")}
-        >
-          Начинки
+          Bun
         </Tab>
         <Tab
           value="sauce"
           active={currentTab === "sauce"}
-          onClick={() => setCurrentTab("sauce")}
+          onClick={() => handleTabClick("sauce")}
         >
-          Соусы
+          Sauce
+        </Tab>
+        <Tab
+          value="main"
+          active={currentTab === "main"}
+          onClick={() => handleTabClick("main")}
+        >
+          Main
         </Tab>
       </div>
-
-      <div className={styles.ingredients_list}>
-        {ingredients
-          .filter((ingredients) => ingredients.type === "sauce")
-          .map((item) => (
-            <article key={item._id} className="ingredient_item">
-              <img src={item.image} alt={item.name} />
-              <span className="ingredient-name">{item.name}</span>
-              <span className="ingredient-price">{item.price} ₽</span>
-              <Counter count={1} size="default" extraClass="m-1" />
-            </article>
-          ))}
+      <div style={{ maxHeight: "500px", overflowY: "auto" }}>
+        <div className="ingredient_list">
+          <div id="bun">
+            <h2>Bun</h2>
+            {data
+              .filter((item) => item.type === "bun")
+              .map((item) => (
+                <IngredientCard key={item._id} ingredient={item} />
+              ))}
+          </div>
+          <div id="sauce">
+            <h2>Sauce</h2>
+            {data
+              .filter((item) => item.type === "sauce")
+              .map((item) => (
+                <IngredientCard key={item._id} ingredient={item} />
+              ))}
+          </div>
+          <div id="main">
+            <h2>Main</h2>
+            {data
+              .filter((item) => item.type === "main")
+              .map((item) => (
+                <IngredientCard key={item._id} ingredient={item} />
+              ))}
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
   );
-};
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      calories: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 export default BurgerIngredients;

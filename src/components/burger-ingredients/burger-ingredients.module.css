@@ -5,16 +5,14 @@
 
 .ingredients_list {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px
-    ;
-    /* flex-direction: column; */
+    grid-template-columns: 1fr 1fr; /* Creates two columns of equal width */
+    gap: 20px; /* Optional: adds space between grid items */
     max-height: 756px;
-    border: 1px solid red;
-    overflow-y: auto;
-}
+    overflow-y: auto; /* Adds a scrollbar */
+  }
+  
 
-/* .ingredient_item {
+.ingredient_item {
         flex-basis: calc(50% - 10px); 
         margin: 5px; 
-} */
+}
