@@ -4,15 +4,24 @@
 }
 
 .ingredients_list {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Creates two columns of equal width */
-    gap: 20px; /* Optional: adds space between grid items */
-    max-height: 756px;
-    overflow-y: auto; /* Adds a scrollbar */
+max-height: 500px;
+overflow: auto;
   }
   
 
 .ingredient_item {
-        flex-basis: calc(50% - 10px); 
-        margin: 5px; 
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 20px; 
+  max-height: 756px;
+}
+
+.category_title {
+font-family: JetBrains Mono;
+font-size: 24px;
+font-weight: 700;
+line-height: 30px;
+letter-spacing: 0em;
+text-align: left;
+
 }

@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 272px;
+    height: 208px;
+}
+
+.image {
+    width: 240px;
+    height: 120px;
+    margin-bottom: 8px;
+}
+
+.price_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.text_price {
+    font-family: Iceland;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding-bottom: 8px;
+}
+
+.text_name {
+    composes: text_price;
+    font-family: JetBrains Mono;
+    font-size: 16px;
+}
