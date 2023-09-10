@@ -25,7 +25,7 @@ const BurgerConstructor = ({ data }) => {
             thumbnail={firstBun.image}
           />
         </div>
-        <ul className={styles.constructor_list}>
+        <ul className={`${styles.constructor_list} custom-scroll`}>
           {fillings.map((ingredient) => (
             <li key={ingredient._id} className={styles.li_element}>
               <DragIcon type="primary" className={styles.drag_icon} />

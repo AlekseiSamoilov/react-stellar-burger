@@ -9,7 +9,7 @@ const BurgerIngredients = ({ data }) => {
   const handleTabClick = (tab) => {
     setCurrentTab(tab);
     const element = document.getElementById(tab);
-    element.scrollIntoView({ behavior: "smooth" });
+    element.scrollIntoView();
   };
 
   return (
@@ -38,7 +38,7 @@ const BurgerIngredients = ({ data }) => {
           Начинки
         </Tab>
       </div>
-      <div className={styles.ingredients_list}>
+      <div className={`${styles.ingredients_list} custom-scroll`}>
         <h2 className={styles.category_title}>Булки</h2>
         <div>
           <div id="bun" className={styles.ingredient_item}>

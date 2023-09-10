@@ -37,6 +37,8 @@ margin-right: 8px;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    padding-right: 8px;
+    width: 600px;
 }
 .locked_ingredient {
     margin-left: 32px;
