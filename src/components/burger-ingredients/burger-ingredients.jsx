@@ -1,5 +1,3 @@
-// BurgerIngredients.js
-
 import IngredientCard from "./ingredient-card/ingredient-card";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useState, useEffect } from "react";
@@ -14,31 +12,9 @@ const BurgerIngredients = ({ data }) => {
     element.scrollIntoView({ behavior: "smooth" });
   };
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const bunElement = document.getElementById("bun").offsetTop;
-  //     const sauceElement = document.getElementById("sauce").offsetTop;
-  //     const mainElement = document.getElementById("main").offsetTop;
-  //     const scrollPosition = window.scrollY;
-
-  //     if (scrollPosition >= mainElement - 50) {
-  //       setCurrentTab("main");
-  //     } else if (scrollPosition >= sauceElement - 50) {
-  //       setCurrentTab("sauce");
-  //     } else if (scrollPosition >= bunElement - 50) {
-  //       setCurrentTab("bun");
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
-
   return (
     <div>
+      <h1 className={styles.ingredients__title}>Соберите бургер</h1>
       <div style={{ display: "flex" }}>
         <Tab
           value="bun"

@@ -4,7 +4,8 @@
 }
 
 .ingredients_list {
-max-height: 500px;
+max-height: 756px;
+height: 100%;
 overflow: auto;
   }
   
@@ -23,5 +24,16 @@ font-weight: 700;
 line-height: 30px;
 letter-spacing: 0em;
 text-align: left;
+}
+
+.ingredients__title {
+font-family: JetBrains Mono;
+font-size: 36px;
+font-weight: 700;
+line-height: 40px;
+letter-spacing: 0em;
+text-align: left;
+padding-top: 40px;
+padding-bottom: 20px;
 
 }
