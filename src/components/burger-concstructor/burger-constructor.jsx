@@ -17,34 +17,40 @@ const BurgerConstructor = ({ data, openOrderModal }) => {
     <div className={styles.constructor_container}>
       <div className={styles.ingredient_box}>
         <div className={styles.locked_ingredient}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={firstBun.name}
-            price={firstBun.price}
-            thumbnail={firstBun.image}
-          />
+          {firstBun && (
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={firstBun.name}
+              price={firstBun.price}
+              thumbnail={firstBun.image}
+            />
+          )}
         </div>
         <ul className={`${styles.constructor_list} custom-scroll`}>
           {fillings.map((ingredient) => (
             <li key={ingredient._id} className={styles.li_element}>
               <DragIcon type="primary" className={styles.drag_icon} />
-              <ConstructorElement
-                text={ingredient.name}
-                price={ingredient.price}
-                thumbnail={ingredient.image}
-              />
+              {ingredient && (
+                <ConstructorElement
+                  text={ingredient.name}
+                  price={ingredient.price}
+                  thumbnail={ingredient.image}
+                />
+              )}
             </li>
           ))}
         </ul>
         <div className={styles.locked_ingredient}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={firstBun.name}
-            price={firstBun.price}
-            thumbnail={firstBun.image}
-          />
+          {firstBun && (
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={firstBun.name}
+              price={firstBun.price}
+              thumbnail={firstBun.image}
+            />
+          )}
         </div>
       </div>
       <div className={styles.buy_container}>

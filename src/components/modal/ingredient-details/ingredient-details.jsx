@@ -1,11 +1,15 @@
 import PropTypes from "prop-types";
 import styles from "./ingredient-details.module.css";
+import { data } from "../../../utils/data";
 
 const IngredientDetails = ({ ingredient }) => {
   return (
     <div className={styles.order_container}>
       <p className="text text_type_main-large">Детали ингредиента</p>
-      {/* <img src={ingredient.image} alt={ingredient.name} /> */}
+      <img
+        src="https://code.s3.yandex.net/react/code/bun-02-large.png"
+        className={styles.ingredient_image}
+      />
       <p className={`text text_type_main-small ${styles.ingredient_name}`}>
         Биокотлета из марсианской Магнолии
       </p>
