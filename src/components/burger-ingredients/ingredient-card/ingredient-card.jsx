@@ -7,9 +7,9 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const IngredientCard = ({ ingredient }) => {
+const IngredientCard = ({ ingredient, openIngredientModal }) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={openIngredientModal}>
       <img src={ingredient.image} alt={ingredient.name} />
       <Counter count={1} size="default" extraClass="m-1" />
       <div className={styles.price_box}>

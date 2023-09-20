@@ -1,0 +1,21 @@
+.order_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 100px;
+    flex-direction: column;
+    z-index: 999;
+}
+
+.order_number {
+    padding-bottom: 32px;
+}
+
+.id_caption {
+    padding-bottom: 60px;
+}
+
+.order_process {
+    padding-top: 60px;
+    padding-bottom: 8px;
+}

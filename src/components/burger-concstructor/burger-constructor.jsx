@@ -9,7 +9,7 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const BurgerConstructor = ({ data }) => {
+const BurgerConstructor = ({ data, openOrderModal }) => {
   const buns = data.filter((item) => item.type === "bun");
   const firstBun = buns[0];
   const fillings = data.filter((item) => item.type !== "bun");
@@ -52,7 +52,12 @@ const BurgerConstructor = ({ data }) => {
           <p className={styles.total_sum}>600</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={openOrderModal}
+        >
           Нажми на меня
         </Button>
       </div>

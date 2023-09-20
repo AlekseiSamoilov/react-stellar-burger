@@ -3,7 +3,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useState, useEffect } from "react";
 import styles from "./burger-ingredients.module.css";
 
-const BurgerIngredients = ({ data }) => {
+const BurgerIngredients = ({ data, openIngredientModal }) => {
   const [currentTab, setCurrentTab] = useState("bun");
 
   const handleTabClick = (tab) => {
@@ -45,7 +45,11 @@ const BurgerIngredients = ({ data }) => {
             {data
               .filter((item) => item.type === "bun")
               .map((item) => (
-                <IngredientCard key={item._id} ingredient={item} />
+                <IngredientCard
+                  openIngredientModal={openIngredientModal}
+                  key={item._id}
+                  ingredient={item}
+                />
               ))}
           </div>
           <h2 className={styles.category_title}>Соусы</h2>
@@ -53,7 +57,11 @@ const BurgerIngredients = ({ data }) => {
             {data
               .filter((item) => item.type === "sauce")
               .map((item) => (
-                <IngredientCard key={item._id} ingredient={item} />
+                <IngredientCard
+                  key={item._id}
+                  ingredient={item}
+                  openIngredientModal={openIngredientModal}
+                />
               ))}
           </div>
           <h2 className={styles.category_title}>Начинки</h2>
@@ -61,7 +69,11 @@ const BurgerIngredients = ({ data }) => {
             {data
               .filter((item) => item.type === "main")
               .map((item) => (
-                <IngredientCard key={item._id} ingredient={item} />
+                <IngredientCard
+                  key={item._id}
+                  ingredient={item}
+                  openIngredientModal={openIngredientModal}
+                />
               ))}
           </div>
         </div>
