@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./burger-constructor.module.css";
+import PropTypes from "prop-types";
 import {
   ConstructorElement,
   Icons,
@@ -64,11 +65,16 @@ const BurgerConstructor = ({ data, openOrderModal }) => {
           size="large"
           onClick={openOrderModal}
         >
-          Нажми на меня
+          Оформить заказ
         </Button>
       </div>
     </div>
   );
+};
+
+BurgerConstructor.propTypes = {
+  openOrderModal: PropTypes.func.isRequired,
+  data: PropTypes.array.isRequired,
 };
 
 export default BurgerConstructor;

@@ -1,9 +1,14 @@
 import IngredientCard from "./ingredient-card/ingredient-card";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./burger-ingredients.module.css";
+import PropTypes from "prop-types";
 
-const BurgerIngredients = ({ data, openIngredientModal }) => {
+const BurgerIngredients = ({
+  data,
+  openIngredientModal,
+  setSelectedIngredient,
+}) => {
   const [currentTab, setCurrentTab] = useState("bun");
 
   const handleTabClick = (tab) => {
@@ -49,6 +54,7 @@ const BurgerIngredients = ({ data, openIngredientModal }) => {
                   openIngredientModal={openIngredientModal}
                   key={item._id}
                   ingredient={item}
+                  setSelectedIngredient={setSelectedIngredient}
                 />
               ))}
           </div>
@@ -61,6 +67,7 @@ const BurgerIngredients = ({ data, openIngredientModal }) => {
                   key={item._id}
                   ingredient={item}
                   openIngredientModal={openIngredientModal}
+                  setSelectedIngredient={setSelectedIngredient}
                 />
               ))}
           </div>
@@ -73,6 +80,7 @@ const BurgerIngredients = ({ data, openIngredientModal }) => {
                   key={item._id}
                   ingredient={item}
                   openIngredientModal={openIngredientModal}
+                  setSelectedIngredient={setSelectedIngredient}
                 />
               ))}
           </div>
@@ -80,6 +88,12 @@ const BurgerIngredients = ({ data, openIngredientModal }) => {
       </div>
     </div>
   );
+};
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.array.isRequired,
+  openIngredientModal: PropTypes.func.isRequired,
+  setSelectedIngredient: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

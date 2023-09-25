@@ -9,8 +9,8 @@ function MainWindow() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [data, setData] = useState([]);
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
   const API_URL = "https://norma.nomoreparties.space/api/ingredients";
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
 
   useEffect(() => {
     fetch(API_URL)
@@ -28,10 +28,6 @@ function MainWindow() {
       });
   }, []);
 
-  const infoForModalIngredient = (ingredient) => {
-    setSelectedIngredient(ingredient);
-    setIsModalOpen(true);
-  };
   const openIngredientModal = () => {
     setModalContent("ingredient");
     setIsModalOpen(true);
@@ -51,15 +47,15 @@ function MainWindow() {
       <BurgerIngredients
         data={data}
         openIngredientModal={openIngredientModal}
+        setSelectedIngredient={setSelectedIngredient}
       />
       {isModalOpen && (
-        <ModalOverlay closeModal={closeModal} content={modalContent} />
+        <ModalOverlay
+          closeModal={closeModal}
+          content={modalContent}
+          selectedIngredient={selectedIngredient}
+        />
       )}
-      {/* {data.length > 0 ? (
-        <BurgerConstructor data={data} openOrderModal={openOrderModal} />
-      ) : (
-        "Loading"
-      )} */}
       <BurgerConstructor data={data} openOrderModal={openOrderModal} />
     </div>
   );

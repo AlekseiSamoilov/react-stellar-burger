@@ -5,6 +5,7 @@
     width: 272px;
     height: 208px;
     position: relative;
+    cursor: pointer;
 }
 
 .image {

@@ -9,7 +9,7 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
       <MainWindow />
-      {/* <ModalOverlay /> */}
+      <div id="modal-root"></div>
     </div>
   );
 }
