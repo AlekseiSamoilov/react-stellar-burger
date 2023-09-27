@@ -1,6 +1,6 @@
 import IngredientCard from "./ingredient-card/ingredient-card";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import styles from "./burger-ingredients.module.css";
 import PropTypes from "prop-types";
 
@@ -91,7 +91,19 @@ const BurgerIngredients = ({
 };
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string,
+      type: PropTypes.string,
+      price: PropTypes.number,
+      proteins: PropTypes.number,
+      fat: PropTypes.number,
+      carbohydrates: PropTypes.number,
+      calories: PropTypes.number,
+      image: PropTypes.string,
+    })
+  ),
   openIngredientModal: PropTypes.func.isRequired,
   setSelectedIngredient: PropTypes.func.isRequired,
 };

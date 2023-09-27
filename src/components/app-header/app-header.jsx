@@ -12,22 +12,22 @@ function AppHeader() {
     <header className={styles.header_main}>
       <div className={styles.header}>
         <div className={styles.header_element_duo}>
-          <div className={styles.header_element_white}>
+          <a href="#" className={styles.header_element_white}>
             <BurgerIcon />
             <p className="text text_type_main-small">Конструктор</p>
-          </div>
-          <div className={styles.header_element_blue}>
+          </a>
+          <a href="#" className={styles.header_element_blue}>
             <ListIcon type="secondary" />
             <p className="text text_type_main-small">Лента заказов</p>
-          </div>
+          </a>
         </div>
         <div className={styles.logo}>
           <Logo />
         </div>
-        <div className={styles.header_element_blue}>
+        <a href="#" className={styles.header_element_blue}>
           <ProfileIcon type="secondary" />
           <p className="text text_type_main-small">Личный кабинет</p>
-        </div>
+        </a>
       </div>
     </header>
   );

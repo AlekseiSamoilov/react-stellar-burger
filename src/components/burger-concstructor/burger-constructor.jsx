@@ -74,7 +74,19 @@ const BurgerConstructor = ({ data, openOrderModal }) => {
 
 BurgerConstructor.propTypes = {
   openOrderModal: PropTypes.func.isRequired,
-  data: PropTypes.array.isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.string,
+      type: PropTypes.string,
+      price: PropTypes.number,
+      proteins: PropTypes.number,
+      fat: PropTypes.number,
+      carbohydrates: PropTypes.number,
+      calories: PropTypes.number,
+      image: PropTypes.string,
+    })
+  ),
 };
 
 export default BurgerConstructor;

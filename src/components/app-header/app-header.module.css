@@ -1,3 +1,4 @@
+
 .header {
   display: flex;
   width: 1280px;
@@ -8,10 +9,10 @@
 }
 .header_element_white {
   display: flex;
-  /* padding: 16px 20px; */
+  text-decoration: none;
   align-items: center;
   gap: 8px;
-  cursor: pointer;
+  color: inherit;
 }
 .header_element_blue {
   composes: header_element_white;

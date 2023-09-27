@@ -5,15 +5,27 @@ import Modal from "../modal";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
-const ModalOverlay = ({ closeModal, content, selectedIngredient }) => {
+// const ModalOverlay = ({ closeModal, content, selectedIngredient }) => {
+//   return (
+//     <div className={styles.overlay_container} onClick={closeModal}>
+//       <Modal closeModal={closeModal}>
+//         {content === "ingredient" && (
+//           <IngredientDetails ingredient={selectedIngredient} />
+//         )}
+//         {content === "order" && <OrderDetails />}
+//       </Modal>
+//     </div>
+//   );
+// };
+const ModalOverlay = ({ closeModal, children }) => {
+  const overlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
   return (
-    <div className={styles.overlay_container} onClick={closeModal}>
-      <Modal closeModal={closeModal}>
-        {content === "ingredient" && (
-          <IngredientDetails ingredient={selectedIngredient} />
-        )}
-        {content === "order" && <OrderDetails />}
-      </Modal>
+    <div className={styles.overlay_container} onClick={overlayClick}>
+      <Modal closeModal={closeModal}>{children}</Modal>
     </div>
   );
 };

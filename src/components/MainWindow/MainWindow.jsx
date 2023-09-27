@@ -4,6 +4,9 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-concstructor/burger-constructor";
 import { useState } from "react";
 import ModalOverlay from "../modal/modal-overlay/modal-overlay";
+import Modal from "../modal/modal";
+import IngredientDetails from "../modal/ingredient-details/ingredient-details";
+import OrderDetails from "../modal/order-details/order-details";
 
 function MainWindow() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,12 +53,20 @@ function MainWindow() {
         setSelectedIngredient={setSelectedIngredient}
       />
       {isModalOpen && (
+        <ModalOverlay closeModal={closeModal}>
+          {modalContent === "ingredient" && (
+            <IngredientDetails ingredient={selectedIngredient} />
+          )}
+          {modalContent === "order" && <OrderDetails />}
+        </ModalOverlay>
+      )}
+      {/* {isModalOpen && (
         <ModalOverlay
           closeModal={closeModal}
           content={modalContent}
           selectedIngredient={selectedIngredient}
         />
-      )}
+      )} */}
       <BurgerConstructor data={data} openOrderModal={openOrderModal} />
     </div>
   );
