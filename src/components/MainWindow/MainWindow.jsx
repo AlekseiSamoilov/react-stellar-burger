@@ -53,20 +53,13 @@ function MainWindow() {
         setSelectedIngredient={setSelectedIngredient}
       />
       {isModalOpen && (
-        <ModalOverlay closeModal={closeModal}>
+        <Modal closeModal={closeModal}>
           {modalContent === "ingredient" && (
             <IngredientDetails ingredient={selectedIngredient} />
           )}
           {modalContent === "order" && <OrderDetails />}
-        </ModalOverlay>
+        </Modal>
       )}
-      {/* {isModalOpen && (
-        <ModalOverlay
-          closeModal={closeModal}
-          content={modalContent}
-          selectedIngredient={selectedIngredient}
-        />
-      )} */}
       <BurgerConstructor data={data} openOrderModal={openOrderModal} />
     </div>
   );
