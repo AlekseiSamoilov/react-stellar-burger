@@ -3,16 +3,16 @@ import styles from "./MainWindow.module.css";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-concstructor/burger-constructor";
 import { useState } from "react";
-import ModalOverlay from "../modal/modal-overlay/modal-overlay";
 import Modal from "../modal/modal";
 import IngredientDetails from "../modal/ingredient-details/ingredient-details";
 import OrderDetails from "../modal/order-details/order-details";
+import { API_URL } from "../../utils/constants";
 
 function MainWindow() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [data, setData] = useState([]);
-  const API_URL = "https://norma.nomoreparties.space/api/ingredients";
+
   const [selectedIngredient, setSelectedIngredient] = useState(null);
 
   useEffect(() => {

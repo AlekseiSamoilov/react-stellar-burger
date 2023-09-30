@@ -3,12 +3,11 @@ import styles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
 import {
   ConstructorElement,
-  Icons,
   Button,
-  Typography,
   CurrencyIcon,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ingredientPropType } from "../../utils/prop-types";
 
 const BurgerConstructor = ({ data, openOrderModal }) => {
   const buns = data.filter((item) => item.type === "bun");
@@ -74,19 +73,7 @@ const BurgerConstructor = ({ data, openOrderModal }) => {
 
 BurgerConstructor.propTypes = {
   openOrderModal: PropTypes.func.isRequired,
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      price: PropTypes.number,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      image: PropTypes.string,
-    })
-  ),
+  data: ingredientPropType.isRequired,
 };
 
 export default BurgerConstructor;

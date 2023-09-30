@@ -1,5 +1,4 @@
 import styles from "./app-header.module.css";
-import { data } from "../../utils/data";
 import {
   BurgerIcon,
   ListIcon,
