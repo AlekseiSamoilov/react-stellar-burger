@@ -1,0 +1,39 @@
+
+.header {
+  display: flex;
+  width: 1280px;
+  height: 56px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+.header_element_white {
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+}
+.header_element_blue {
+  composes: header_element_white;
+  color: #8585AD;
+}
+.header_element_duo {
+  composes: header_element_white;
+  display: flex;
+  gap: 48px;
+}
+.logo {
+  margin-right: 288px;
+  margin-left: 112px;
+}
+
+.header_main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+max-width: 1920px;
+width: 100%;
+padding: 16px 0;
+background: #1C1C21;
+}

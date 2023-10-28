@@ -1,0 +1,50 @@
+.constructor_container {
+width: 600px;
+padding: 80px 16px 40px 16px;
+}
+.ingredient_box {
+    display: flex;
+    flex-direction: column;
+    height: 696px;
+    width: 100%;
+    gap: 26px;
+    padding-bottom: 40px;
+}
+
+.buy_container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 40px;
+}
+.sum_container {
+    display: flex;
+    align-items: center;
+}
+.total_sum {
+    font-family: Iceland;
+font-size: 48px;
+font-weight: 400;
+line-height: 36px;
+letter-spacing: 0em;
+text-align: right;
+margin-right: 8px;
+}
+
+.constructor_list {
+    overflow: auto;
+    max-height: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-right: 8px;
+    width: 600px;
+}
+.locked_ingredient {
+    margin-left: 32px;
+}
+.li_element {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
