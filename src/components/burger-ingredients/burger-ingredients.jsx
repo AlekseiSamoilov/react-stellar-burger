@@ -6,13 +6,9 @@ import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types";
 import IngredientContext from "../../services/BurgerContext";
 
-const BurgerIngredients = ({
-  data,
-  openIngredientModal,
-  setSelectedIngredient,
-}) => {
+const BurgerIngredients = ({ openIngredientModal, setSelectedIngredient }) => {
   const [currentTab, setCurrentTab] = useState("bun");
-  const { dispatch } = useContext(IngredientContext);
+  const { dispatch, data } = useContext(IngredientContext);
 
   const handleIngredientClick = (ingredients) => {
     if (ingredients.type === "bun") {
@@ -113,7 +109,6 @@ const BurgerIngredients = ({
 BurgerIngredients.propTypes = {
   openIngredientModal: PropTypes.func.isRequired,
   setSelectedIngredient: PropTypes.func.isRequired,
-  data: ingredientPropType.isRequired,
 };
 
 export default BurgerIngredients;

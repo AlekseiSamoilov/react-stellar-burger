@@ -7,11 +7,9 @@ import {
   CurrencyIcon,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { ingredientPropType } from "../../utils/prop-types";
 import IngredientContext from "../../services/BurgerContext";
-import { API_ORDER } from "../../utils/constants";
 
-const BurgerConstructor = ({ openOrderModal, handleOrder, setOrderNumber }) => {
+const BurgerConstructor = ({ handleOrder, isLoading }) => {
   const { state } = useContext(IngredientContext);
   const { ingredients, bun, totalPrice } = state;
 
@@ -30,18 +28,19 @@ const BurgerConstructor = ({ openOrderModal, handleOrder, setOrderNumber }) => {
           )}
         </div>
         <ul className={`${styles.constructor_list} custom-scroll`}>
-          {ingredients.map((ingredient, index) => (
-            <li key={ingredient._id + index} className={styles.li_element}>
-              <DragIcon type="primary" className={styles.drag_icon} />
-              {ingredient && (
-                <ConstructorElement
-                  text={ingredient.name}
-                  price={ingredient.price}
-                  thumbnail={ingredient.image}
-                />
-              )}
-            </li>
-          ))}
+          {ingredients &&
+            ingredients.map((ingredient, index) => (
+              <li key={ingredient._id + index} className={styles.li_element}>
+                <DragIcon type="primary" className={styles.drag_icon} />
+                {ingredient && (
+                  <ConstructorElement
+                    text={ingredient.name}
+                    price={ingredient.price}
+                    thumbnail={ingredient.image}
+                  />
+                )}
+              </li>
+            ))}
         </ul>
         <div className={styles.locked_ingredient}>
           {bun && (
@@ -65,8 +64,9 @@ const BurgerConstructor = ({ openOrderModal, handleOrder, setOrderNumber }) => {
           type="primary"
           size="large"
           onClick={handleOrder}
+          disabled={!bun || isLoading}
         >
-          Оформить заказ
+          {isLoading ? "Загрузка..." : "Оформить заказ"}
         </Button>
       </div>
     </div>
@@ -74,8 +74,8 @@ const BurgerConstructor = ({ openOrderModal, handleOrder, setOrderNumber }) => {
 };
 
 BurgerConstructor.propTypes = {
-  openOrderModal: PropTypes.func.isRequired,
-  // data: ingredientPropType.isRequired,
+  handleOrder: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default BurgerConstructor;

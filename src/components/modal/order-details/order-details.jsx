@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./order-details.module.css";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { API_ORDER } from "../../../utils/constants";
 
 const OrderDetails = ({ orderNumber }) => {
   return (
@@ -22,6 +21,13 @@ const OrderDetails = ({ orderNumber }) => {
       </p>
     </div>
   );
+};
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.instanceOf(null),
+  ]),
 };
 
 export default OrderDetails;
