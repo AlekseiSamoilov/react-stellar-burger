@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
 import {
@@ -9,15 +9,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ingredientPropType } from "../../utils/prop-types";
 import IngredientContext from "../../services/BurgerContext";
+import { API_ORDER } from "../../utils/constants";
 
-const BurgerConstructor = ({ openOrderModal, constructorIngredients, bun }) => {
-  const data = useContext(IngredientContext);
-  // const buns = data.filter((item) => item.type === "bun");
-  // const firstBun = buns[0];
-  // const fillings = data.filter((item) => item.type !== "bun");
-  const totalPrice =
-    constructorIngredients.reduce((sum, item) => sum + item.price, 0) +
-    (bun ? bun.price * 2 : 0);
+const BurgerConstructor = ({ openOrderModal, handleOrder, setOrderNumber }) => {
+  const { state } = useContext(IngredientContext);
+  const { ingredients, bun, totalPrice } = state;
 
   return (
     <div className={styles.constructor_container}>
@@ -34,7 +30,7 @@ const BurgerConstructor = ({ openOrderModal, constructorIngredients, bun }) => {
           )}
         </div>
         <ul className={`${styles.constructor_list} custom-scroll`}>
-          {constructorIngredients.map((ingredient, index) => (
+          {ingredients.map((ingredient, index) => (
             <li key={ingredient._id + index} className={styles.li_element}>
               <DragIcon type="primary" className={styles.drag_icon} />
               {ingredient && (
@@ -68,7 +64,7 @@ const BurgerConstructor = ({ openOrderModal, constructorIngredients, bun }) => {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={openOrderModal}
+          onClick={handleOrder}
         >
           Оформить заказ
         </Button>

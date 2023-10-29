@@ -16,7 +16,6 @@ const IngredientCard = ({
   const handleClick = () => {
     setSelectedIngredient(ingredient);
     openIngredientModal();
-    // handleIngredientClick(ingredient);
   };
   return (
     <div

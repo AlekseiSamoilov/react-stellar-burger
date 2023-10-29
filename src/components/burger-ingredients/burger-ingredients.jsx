@@ -1,24 +1,24 @@
 import IngredientCard from "./ingredient-card/ingredient-card";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import styles from "./burger-ingredients.module.css";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types";
+import IngredientContext from "../../services/BurgerContext";
 
 const BurgerIngredients = ({
   data,
-  addIngredient,
   openIngredientModal,
   setSelectedIngredient,
-  addBun,
 }) => {
   const [currentTab, setCurrentTab] = useState("bun");
+  const { dispatch } = useContext(IngredientContext);
 
-  const handleIngredientClick = (ingredient) => {
-    if (ingredient.type === "bun") {
-      addBun(ingredient);
+  const handleIngredientClick = (ingredients) => {
+    if (ingredients.type === "bun") {
+      dispatch({ type: "ADD_BUN", bun: ingredients });
     } else {
-      addIngredient(ingredient);
+      dispatch({ type: "ADD_INGREDIENT", ingredient: ingredients });
     }
   };
 

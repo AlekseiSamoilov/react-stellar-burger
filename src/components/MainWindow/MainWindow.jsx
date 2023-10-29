@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import styles from "./MainWindow.module.css";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-concstructor/burger-constructor";
@@ -8,25 +8,20 @@ import IngredientDetails from "../modal/ingredient-details/ingredient-details";
 import OrderDetails from "../modal/order-details/order-details";
 import { API_URL } from "../../utils/constants";
 import IngredientContext from "../../services/BurgerContext";
+import { burgerReducer } from "../../services/burgerReducer";
+import { API_ORDER } from "../../utils/constants";
 
 function MainWindow() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [data, setData] = useState([]);
   const [selectedIngredient, setSelectedIngredient] = useState(null);
-  const [constructorIngredient, setConstructorIngredient] = useState([]);
-  const [bun, setBun] = useState(null);
-
-  const addIngredient = (ingredient) => {
-    setConstructorIngredient((prevIngredients) => [
-      ...prevIngredients,
-      ingredient,
-    ]);
-  };
-
-  const addBun = (newBun) => {
-    setBun(newBun);
-  };
+  const [orderNumber, setOrderNumber] = useState(null);
+  const [state, dispatch] = useReducer(burgerReducer, {
+    ingredients: [],
+    bun: null,
+    totalPrice: 0,
+  });
 
   useEffect(() => {
     fetch(API_URL)
@@ -58,29 +53,60 @@ function MainWindow() {
     setIsModalOpen(false);
   };
 
+  // Order number
+  const placeOrder = async (ingredients) => {
+    try {
+      const response = await fetch(API_ORDER, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ingredients }),
+      });
+      if (!response.ok) {
+        throw new Error("Order not placed");
+      }
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleOrder = async () => {
+    const ingredientIds = data.map((ingredient) => ingredient._id);
+    const orderResult = await placeOrder(ingredientIds);
+
+    if (orderResult && orderResult.success) {
+      openOrderModal();
+      setOrderNumber(orderResult.order.number);
+    }
+  };
+
   return (
-    <IngredientContext.Provider value={data}>
+    <IngredientContext.Provider value={{ data, state, dispatch }}>
       <div className={styles.main_window}>
         <BurgerIngredients
           data={data}
-          addIngredient={addIngredient}
+          dispatch={dispatch}
           openIngredientModal={openIngredientModal}
           setSelectedIngredient={setSelectedIngredient}
-          addBun={addBun}
         />
         {isModalOpen && (
           <Modal closeModal={closeModal}>
             {modalContent === "ingredient" && (
               <IngredientDetails ingredient={selectedIngredient} />
             )}
-            {modalContent === "order" && <OrderDetails />}
+            {modalContent === "order" && (
+              <OrderDetails orderNumber={orderNumber} />
+            )}
           </Modal>
         )}
         <BurgerConstructor
-          // data={constructorIngredient}
           openOrderModal={openOrderModal}
-          constructorIngredients={constructorIngredient}
-          bun={bun}
+          dispatch={dispatch}
+          setOrderNumber={setOrderNumber}
+          handleOrder={handleOrder}
         />
       </div>
     </IngredientContext.Provider>

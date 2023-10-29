@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./order-details.module.css";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { API_ORDER } from "../../../utils/constants";
 
-const OrderDetails = () => {
+const OrderDetails = ({ orderNumber }) => {
   return (
     <div className={styles.order_container}>
       <p className={`text text_type_digits-large ${styles.order_number}`}>
-        034536
+        {orderNumber}
       </p>
       <p className={`text text_type_main-small ${styles.id_caption}`}>
         идентификатор заказа
