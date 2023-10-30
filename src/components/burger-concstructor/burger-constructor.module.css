@@ -1,10 +1,11 @@
 .constructor_container {
 width: 600px;
-padding: 80px 16px 40px 16px;
+padding: 100px 16px 40px 16px;
 }
 .ingredient_box {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     height: 696px;
     width: 100%;
     gap: 26px;

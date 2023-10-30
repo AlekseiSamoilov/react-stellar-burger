@@ -11,13 +11,20 @@ const IngredientCard = ({
   ingredient,
   openIngredientModal,
   setSelectedIngredient,
+  handleIngredientClick,
 }) => {
   const handleClick = () => {
     setSelectedIngredient(ingredient);
     openIngredientModal();
   };
   return (
-    <div className={styles.container} onClick={handleClick}>
+    <div
+      className={styles.container}
+      onClick={() => {
+        handleIngredientClick(ingredient);
+        handleClick();
+      }}
+    >
       <img src={ingredient.image} alt={ingredient.name} />
       <Counter count={1} size="default" extraClass="m-1" />
       <div className={styles.price_box}>
