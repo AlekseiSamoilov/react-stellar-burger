@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from "react";
-import styles from "./MainWindow.module.css";
+import styles from "./main-window.module.css";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-concstructor/burger-constructor";
 import { useState } from "react";
@@ -47,6 +47,8 @@ function MainWindow() {
 
   // Order number
   const placeOrder = (ingredients) => {
+    setIsLoading(true);
+
     return request("/orders", {
       method: "POST",
       headers: {
@@ -55,25 +57,33 @@ function MainWindow() {
       body: JSON.stringify({ ingredients }),
     })
       .then((result) => {
-        return result;
+        // return result;
+        openOrderModal();
+        setOrderNumber(result.order.number);
+        dispatch({ type: RESET_CONSTRUCTOR });
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const handleOrder = async () => {
     const ingredientIds = data.map((ingredient) => ingredient._id);
-    setIsLoading(true);
-    const orderResult = await placeOrder(ingredientIds);
-
-    if (orderResult && orderResult.success) {
-      openOrderModal();
-      setOrderNumber(orderResult.order.number);
-      dispatch({ type: "RESET_CONSTRUCTOR" });
-    }
-    setIsLoading(false);
+    placeOrder(ingredientIds);
   };
+  // const handleOrder = async () => {
+  //   const ingredientIds = data.map((ingredient) => ingredient._id);
+  //   setIsLoading(true);
+  //   const orderResult = await placeOrder(ingredientIds);
+
+  //   if (orderResult && orderResult.success) {
+  //     openOrderModal();
+  //     setOrderNumber(orderResult.order.number);
+  //     dispatch({ type: RESET_CONSTRUCTOR });
+  //   }
+  //   setIsLoading(false);
+  // };
 
   return (
     <IngredientContext.Provider value={{ data, state, dispatch }}>

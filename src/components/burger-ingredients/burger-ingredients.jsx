@@ -5,6 +5,7 @@ import styles from "./burger-ingredients.module.css";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types";
 import IngredientContext from "../../services/BurgerContext";
+import { ADD_BUN, ADD_INGREDIENT } from "../../actions/actionTypes";
 
 const BurgerIngredients = ({ openIngredientModal, setSelectedIngredient }) => {
   const [currentTab, setCurrentTab] = useState("bun");
@@ -12,9 +13,9 @@ const BurgerIngredients = ({ openIngredientModal, setSelectedIngredient }) => {
 
   const handleIngredientClick = (ingredients) => {
     if (ingredients.type === "bun") {
-      dispatch({ type: "ADD_BUN", bun: ingredients });
+      dispatch({ type: ADD_BUN, bun: ingredients });
     } else {
-      dispatch({ type: "ADD_INGREDIENT", ingredient: ingredients });
+      dispatch({ type: ADD_INGREDIENT, ingredient: ingredients });
     }
   };
 

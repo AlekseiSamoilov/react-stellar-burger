@@ -16,7 +16,7 @@ export function burgerReducer(state, action) {
         };
         case RESET_CONSTRUCTOR:
             return {
-                ingredient: [],
+                ingredients: [],
                 bun: null,
                 totalPrice: 0,
             };
