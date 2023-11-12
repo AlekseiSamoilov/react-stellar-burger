@@ -12,7 +12,9 @@ const OrderDetails = ({ orderNumber }) => {
       <p className={`text text_type_main-small ${styles.id_caption}`}>
         идентификатор заказа
       </p>
-      <CheckMarkIcon type="primary" />
+      <div className={styles.checkmarck_container}>
+        <CheckMarkIcon type="primary" />
+      </div>
       <p className={`text text_type_main-small ${styles.order_process}`}>
         Ваш заказ начали готовить
       </p>

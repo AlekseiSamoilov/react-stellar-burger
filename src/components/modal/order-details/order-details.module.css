@@ -19,3 +19,29 @@
     padding-top: 60px;
     padding-bottom: 8px;
 }
+
+.checkmarck_container {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #6A5CFF;
+    border-radius: 50%;
+}
+
+
+.checkmarck_container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 50%;
+    box-shadow: 
+      0 0 0 5px rgba(106, 92, 255, 0.2),
+      0 0 0 10px rgba(106, 92, 255, 0.3),
+      0 0 0 15px rgba(106, 92, 255, 0.2);
+  }
