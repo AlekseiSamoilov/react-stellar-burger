@@ -9,17 +9,12 @@ const initialState = {
     order: null,
 };
 
-export function burgerReducer(state = initialState, action) {
+export function constrcutorWork(state = initialState, action) {
     switch (action.type) {
-        case ADD_INGREDIENT:
-            const newIngredient = {
-                ...action.payload,
-                uniqueId: `${action.payload._id}_${new Date().getTime()}`
-              };
-              
+        case ADD_INGREDIENT:         
               return {
                 ...state,
-                ingredients: [...state.ingredients, newIngredient],
+                ingredients: [...state.ingredients, action.payload],
                 totalPrice: state.totalPrice + action.payload.price,
               };
         case ADD_BUN:
@@ -34,28 +29,7 @@ export function burgerReducer(state = initialState, action) {
                 ...initialState,
                 allIngredients: state.allIngredients,
             };
-        case SET_INGREDIENTS: 
-        return {
-            ...state, 
-            allIngredients: action.payload,
-        };
-        case PLACE_ORDER_START:
-            return {
-                ...state,
-                isLoading: true,
-            };
-        case PLACE_ORDER_SUCCESS:
-            return {
-                ...state,
-                isLoading: false,
-                order: action.payload,
-            };
-        case PLACE_ORDER_FAIL:
-            return {
-                ...state,
-                isLoading: false,
-                error: action.payload,
-            };
+
             case REMOVE_INGREDIENT:
                 const updatedIngredients = state.ingredients.filter(ingredient => ingredient.uniqueId !== action.payload);
                 const removedIngredient = state.ingredients.find(ingredient => ingredient.uniqueId === action.payload);

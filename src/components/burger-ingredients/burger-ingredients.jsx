@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 const BurgerIngredients = ({ openIngredientModal, setSelectedIngredient }) => {
   const [currentTab, setCurrentTab] = useState("bun");
   const dispatch = useDispatch();
-  const { allIngredients } = useSelector((state) => state.burger);
+  const { allIngredients } = useSelector((state) => state.load);
   const containerRef = useRef(null);
   const { ingredients } = useSelector((state) => state.burger);
 

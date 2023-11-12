@@ -15,14 +15,19 @@ import {
   addIngredient,
   removeIngredient,
   sortIngredient,
-} from "../../actions/actions";
-import DraggableIngredient from "../dnd-element/draggable-ingredient";
+} from "../../actions/constructorActions";
+import DraggableIngredient from "../draggable-ingredient/draggable-ingredient";
 
 const BurgerConstructor = ({ handleOrder, isLoading }) => {
   const dispatch = useDispatch();
-  const { ingredients, bun, totalPrice } = useSelector((state) => state.burger);
+  const burgerSelector = (state) => state.burger;
+  const { ingredients, bun, totalPrice } = useSelector(burgerSelector);
   const ingredientsArray = Object.values(ingredients);
 
+  const handleAddIngredient = (item) => {
+    const uniqueId = `${item._id}_${new Date().getTime()}`;
+    dispatch(addIngredient({ ...item, uniqueId }));
+  };
   const [, dropRef] = useDrop({
     accept: ["ingredient", "sort-ingredient"],
     drop: (item, monitor) => {
@@ -33,9 +38,9 @@ const BurgerConstructor = ({ handleOrder, isLoading }) => {
       if (item.type === "bun") {
         dispatch(addBun(item));
       } else if (item.type === "main") {
-        dispatch(addIngredient(item));
+        handleAddIngredient(item);
       } else if (item.type === "sauce") {
-        dispatch(addIngredient(item));
+        handleAddIngredient(item);
       } else {
         return;
       }

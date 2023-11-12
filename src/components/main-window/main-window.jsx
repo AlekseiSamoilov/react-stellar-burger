@@ -8,14 +8,14 @@ import IngredientDetails from "../modal/ingredient-details/ingredient-details";
 import OrderDetails from "../modal/order-details/order-details";
 import { useModal } from "../../hooks/useModal";
 import { request } from "../../utils/request";
+import { resetConstructor } from "../../actions/constructorActions";
 import {
+  placeOrderFail,
   placeOrderStart,
   placeOrderSuccess,
-  placeOrderFail,
-  resetConstructor,
-} from "../../actions/actions";
+} from "../../actions/orderActions";
 import { Provider, useDispatch, useSelector } from "react-redux";
-import { setIngredients } from "../../actions/actions";
+import { setIngredients } from "../../actions/dataLoadActions";
 
 function MainWindow() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -24,9 +24,8 @@ function MainWindow() {
   const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { allIngredients, ingredients, bun, totalPrice } = useSelector(
-    (state) => state.burger
-  );
+  const { ingredients, bun, totalPrice } = useSelector((state) => state.burger);
+  const { allIngredients } = useSelector((state) => state.load);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -72,11 +71,11 @@ function MainWindow() {
       setIsLoading(false);
     }
   };
-
   const handleOrder = async () => {
-    const ingredientIds = allIngredients.map((ingredient) => ingredient._id);
+    const ingredientIds = bun ? [bun._id] : [];
+    ingredientIds.push(...ingredients.map((ingredient) => ingredient._id));
+    if (bun) ingredientIds.push(bun._id);
     await placeOrder(ingredientIds);
-    // setIsLoading(false);
   };
 
   return (
