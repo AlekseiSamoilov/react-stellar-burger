@@ -1,23 +1,70 @@
 import IngredientCard from "./ingredient-card/ingredient-card";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useMemo, useRef, useState, useEffect } from "react";
 import styles from "./burger-ingredients.module.css";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types";
-import IngredientContext from "../../services/BurgerContext";
-import { ADD_BUN, ADD_INGREDIENT } from "../../actions/actionTypes";
+import { useDispatch, useSelector } from "react-redux";
 
 const BurgerIngredients = ({ openIngredientModal, setSelectedIngredient }) => {
   const [currentTab, setCurrentTab] = useState("bun");
-  const { dispatch, data } = useContext(IngredientContext);
+  const dispatch = useDispatch();
+  const { allIngredients } = useSelector((state) => state.load);
+  const containerRef = useRef(null);
+  const { ingredients } = useSelector((state) => state.burger);
 
-  const handleIngredientClick = (ingredients) => {
-    if (ingredients.type === "bun") {
-      dispatch({ type: ADD_BUN, bun: ingredients });
-    } else {
-      dispatch({ type: ADD_INGREDIENT, ingredient: ingredients });
+  // const handleIngredientClick = (ingredients) => {
+  //   if (ingredients.type === "bun") {
+  //     // dispatch({ type: ADD_BUN, bun: ingredients });
+  //     dispatch(addBun(ingredients.bun));
+  //   } else {
+  //     // dispatch({ type: ADD_INGREDIENT, ingredient: ingredients });
+  //     dispatch(addIngredient(ingredients.ingredient));
+  //   }
+  // };
+
+  const handleScroll = () => {
+    const container = containerRef.current;
+    if (!container) {
+      console.warn("Container not found!");
+      return;
     }
+
+    const bunsElement = document.getElementById("bun");
+    const saucesElement = document.getElementById("sauce");
+    const mainsElement = document.getElementById("main");
+
+    const bunsPosition =
+      bunsElement.getBoundingClientRect().top -
+      container.getBoundingClientRect().top;
+    const saucesPosition =
+      saucesElement.getBoundingClientRect().top -
+      container.getBoundingClientRect().top;
+    const mainsPosition =
+      mainsElement.getBoundingClientRect().top -
+      container.getBoundingClientRect().top;
+
+    const positions = [
+      { type: "bun", position: Math.abs(bunsPosition) },
+      { type: "sauce", position: Math.abs(saucesPosition) },
+      { type: "main", position: Math.abs(mainsPosition) },
+    ];
+
+    const closest = positions.sort((a, b) => a.position - b.position)[0].type;
+
+    setCurrentTab(closest);
   };
+  useEffect(() => {
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+    }
+    return () => {
+      if (container) {
+        container.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [allIngredients]);
 
   const handleTabClick = (tab) => {
     setCurrentTab(tab);
@@ -25,16 +72,16 @@ const BurgerIngredients = ({ openIngredientModal, setSelectedIngredient }) => {
     element.scrollIntoView({ behavior: "smooth" });
   };
   const buns = useMemo(
-    () => data.filter((item) => item.type === "bun"),
-    [data]
+    () => allIngredients.filter((item) => item.type === "bun"),
+    [allIngredients]
   );
   const sauces = useMemo(
-    () => data.filter((item) => item.type === "sauce"),
-    [data]
+    () => allIngredients.filter((item) => item.type === "sauce"),
+    [allIngredients]
   );
   const mains = useMemo(
-    () => data.filter((item) => item.type === "main"),
-    [data]
+    () => allIngredients.filter((item) => item.type === "main"),
+    [allIngredients]
   );
 
   return (
@@ -63,41 +110,51 @@ const BurgerIngredients = ({ openIngredientModal, setSelectedIngredient }) => {
           Начинки
         </Tab>
       </div>
-      <div className={`${styles.ingredients_list} custom-scroll`}>
+      <div
+        className={`${styles.ingredients_list} custom-scroll`}
+        id="ingredients-container"
+        ref={containerRef}
+      >
         <h2 className={styles.category_title}>Булки</h2>
         <div>
           <div id="bun" className={styles.ingredient_item}>
-            {buns.map((item) => (
+            {buns.map((item, index) => (
               <IngredientCard
                 openIngredientModal={openIngredientModal}
-                key={item._id}
+                key={index}
                 ingredient={item}
                 setSelectedIngredient={setSelectedIngredient}
-                handleIngredientClick={handleIngredientClick}
+                // handleIngredientClick={handleIngredientClick}
+                count={ingredients[item._id]?.count || 0}
+                index={index}
               />
             ))}
           </div>
           <h2 className={styles.category_title}>Соусы</h2>
           <div id="sauce" className={styles.ingredient_item}>
-            {sauces.map((item) => (
+            {sauces.map((item, index) => (
               <IngredientCard
-                key={item._id}
+                key={index}
                 ingredient={item}
                 openIngredientModal={openIngredientModal}
                 setSelectedIngredient={setSelectedIngredient}
-                handleIngredientClick={handleIngredientClick}
+                // handleIngredientClick={handleIngredientClick}
+                count={ingredients[item._id]?.count || 0}
+                index={index}
               />
             ))}
           </div>
           <h2 className={styles.category_title}>Начинки</h2>
           <div id="main" className={styles.ingredient_item}>
-            {mains.map((item) => (
+            {mains.map((item, index) => (
               <IngredientCard
-                key={item._id}
+                key={index}
                 ingredient={item}
                 openIngredientModal={openIngredientModal}
                 setSelectedIngredient={setSelectedIngredient}
-                handleIngredientClick={handleIngredientClick}
+                // handleIngredientClick={handleIngredientClick}
+                index={index}
+                count={ingredients[item._id]?.count || 0}
               />
             ))}
           </div>

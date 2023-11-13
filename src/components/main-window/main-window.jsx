@@ -6,11 +6,16 @@ import { useState } from "react";
 import Modal from "../modal/modal";
 import IngredientDetails from "../modal/ingredient-details/ingredient-details";
 import OrderDetails from "../modal/order-details/order-details";
-import IngredientContext from "../../services/BurgerContext";
-import { burgerReducer } from "../../services/burgerReducer";
 import { useModal } from "../../hooks/useModal";
 import { request } from "../../utils/request";
-import { RESET_CONSTRUCTOR } from "../../actions/actionTypes";
+import { resetConstructor } from "../../actions/constructorActions";
+import {
+  placeOrderFail,
+  placeOrderStart,
+  placeOrderSuccess,
+} from "../../actions/orderActions";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import { setIngredients } from "../../actions/dataLoadActions";
 
 function MainWindow() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -19,21 +24,19 @@ function MainWindow() {
   const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [state, dispatch] = useReducer(burgerReducer, {
-    ingredients: [],
-    bun: null,
-    totalPrice: 0,
-  });
+  const { ingredients, bun, totalPrice } = useSelector((state) => state.burger);
+  const { allIngredients } = useSelector((state) => state.load);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     request("/ingredients")
       .then((result) => {
-        setData(result.data);
+        dispatch(setIngredients(result.data));
       })
       .catch((error) => {
         console.log("Ошибка", error);
       });
-  }, []);
+  }, [dispatch]);
 
   const openIngredientModal = () => {
     setModalContent("ingredient");
@@ -46,65 +49,53 @@ function MainWindow() {
   };
 
   // Order number
-  const placeOrder = (ingredients) => {
+  const placeOrder = async (ingredients) => {
     setIsLoading(true);
-
-    return request("/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ingredients }),
-    })
-      .then((result) => {
-        // return result;
-        openOrderModal();
-        setOrderNumber(result.order.number);
-        dispatch({ type: RESET_CONSTRUCTOR });
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => setIsLoading(false));
+    dispatch(placeOrderStart());
+    try {
+      const result_1 = await request("/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ingredients }),
+      });
+      dispatch(placeOrderSuccess());
+      setOrderNumber(result_1.order.number);
+      openOrderModal();
+      dispatch(resetConstructor());
+    } catch (error) {
+      console.log(error);
+      dispatch(placeOrderFail());
+    } finally {
+      setIsLoading(false);
+    }
   };
-
   const handleOrder = async () => {
-    const ingredientIds = data.map((ingredient) => ingredient._id);
-    placeOrder(ingredientIds);
+    const ingredientIds = bun ? [bun._id] : [];
+    ingredientIds.push(...ingredients.map((ingredient) => ingredient._id));
+    if (bun) ingredientIds.push(bun._id);
+    await placeOrder(ingredientIds);
   };
-  // const handleOrder = async () => {
-  //   const ingredientIds = data.map((ingredient) => ingredient._id);
-  //   setIsLoading(true);
-  //   const orderResult = await placeOrder(ingredientIds);
-
-  //   if (orderResult && orderResult.success) {
-  //     openOrderModal();
-  //     setOrderNumber(orderResult.order.number);
-  //     dispatch({ type: RESET_CONSTRUCTOR });
-  //   }
-  //   setIsLoading(false);
-  // };
 
   return (
-    <IngredientContext.Provider value={{ data, state, dispatch }}>
-      <main className={styles.main_window}>
-        <BurgerIngredients
-          openIngredientModal={openIngredientModal}
-          setSelectedIngredient={setSelectedIngredient}
-        />
-        {isModalOpen && (
-          <Modal closeModal={closeModal}>
-            {modalContent === "ingredient" && (
-              <IngredientDetails ingredient={selectedIngredient} />
-            )}
-            {modalContent === "order" && (
-              <OrderDetails orderNumber={orderNumber} />
-            )}
-          </Modal>
-        )}
-        <BurgerConstructor handleOrder={handleOrder} isLoading={isLoading} />
-      </main>
-    </IngredientContext.Provider>
+    <main className={styles.main_window}>
+      <BurgerIngredients
+        openIngredientModal={openIngredientModal}
+        setSelectedIngredient={setSelectedIngredient}
+      />
+      {isModalOpen && (
+        <Modal closeModal={closeModal}>
+          {modalContent === "ingredient" && (
+            <IngredientDetails ingredient={selectedIngredient} />
+          )}
+          {modalContent === "order" && (
+            <OrderDetails orderNumber={orderNumber} />
+          )}
+        </Modal>
+      )}
+      <BurgerConstructor handleOrder={handleOrder} isLoading={isLoading} />
+    </main>
   );
 }
 
