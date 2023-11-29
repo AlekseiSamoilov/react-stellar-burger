@@ -11,7 +11,7 @@ function AppHeader() {
     <header className={styles.header_main}>
       <div className={styles.header}>
         <div className={styles.header_element_duo}>
-          <a href="#" className={styles.header_element_white}>
+          <a href="/" className={styles.header_element_white}>
             <BurgerIcon />
             <p className="text text_type_main-small">Конструктор</p>
           </a>
@@ -23,7 +23,7 @@ function AppHeader() {
         <div className={styles.logo}>
           <Logo />
         </div>
-        <a href="#" className={styles.header_element_blue}>
+        <a href="/profile" className={styles.header_element_blue}>
           <ProfileIcon type="secondary" />
           <p className="text text_type_main-small">Личный кабинет</p>
         </a>
