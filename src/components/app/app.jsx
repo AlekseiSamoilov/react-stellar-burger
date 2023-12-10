@@ -2,7 +2,7 @@ import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import MainWindow from "../main-window/main-window";
 import { store } from "../../services/store";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -15,10 +15,6 @@ import { PageNotFound } from "../../pages/error404";
 import ProtectedRouteElement from "../protected-route-element/protected-route-element";
 import LocalStorageRestoration from "../protected-route-element/localStorageRestoration";
 import IngredientDetailsPage from "../../pages/ingredientDetailsPage";
-import { useLocation } from "react-router-dom";
-import Modal from "../modal/modal";
-import IngredientDetails from "../modal/ingredient-details/ingredient-details";
-import { useNavigate } from "react-router-dom";
 import ModalWrapper from "../modal-wrapper";
 import DataLoader from "../data-loader/data-loader";
 
@@ -37,25 +33,25 @@ function App() {
                 <Route
                   path="/register"
                   element={
-                    <ProtectedRouteElement>
-                      <RegisterPage />
-                    </ProtectedRouteElement>
+                    // <ProtectedRouteElement>
+                    <RegisterPage />
+                    // </ProtectedRouteElement>
                   }
                 />
                 <Route
                   path="/forgot-password"
                   element={
-                    <ProtectedRouteElement>
-                      <ForgotPasswordPage />
-                    </ProtectedRouteElement>
+                    // <ProtectedRouteElement>
+                    <ForgotPasswordPage />
+                    // {/* </ProtectedRouteElement> */}
                   }
                 />
                 <Route
                   path="/reset-password"
                   element={
-                    <ProtectedRouteElement>
-                      <ResetPasswordPage />
-                    </ProtectedRouteElement>
+                    // <ProtectedRouteElement>
+                    <ResetPasswordPage />
+                    // {/* </ProtectedRouteElement> */}
                   }
                 />
                 <Route

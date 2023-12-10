@@ -5,9 +5,7 @@ import {
   ConstructorElement,
   Button,
   CurrencyIcon,
-  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientContext from "../../services/BurgerContext";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop, useDrag } from "react-dnd";
 import {
@@ -17,12 +15,23 @@ import {
   sortIngredient,
 } from "../../actions/constructorActions";
 import DraggableIngredient from "../draggable-ingredient/draggable-ingredient";
+import { useNavigate } from "react-router-dom";
 
 const BurgerConstructor = ({ handleOrder, isLoading }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const burgerSelector = (state) => state.burger;
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const { ingredients, bun, totalPrice } = useSelector(burgerSelector);
   const ingredientsArray = Object.values(ingredients);
+
+  const hadnleButtonClick = () => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    } else {
+      handleOrder();
+    }
+  };
 
   const handleAddIngredient = (item) => {
     const uniqueId = `${item._id}_${new Date().getTime()}`;
@@ -109,7 +118,7 @@ const BurgerConstructor = ({ handleOrder, isLoading }) => {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={handleOrder}
+          onClick={hadnleButtonClick}
           disabled={!bun || isLoading}
         >
           {isLoading ? "Загрузка..." : "Оформить заказ"}

@@ -33,7 +33,6 @@ const ProfileInfo = () => {
 
   const handleChange = (e) => {
     setEditData({ ...editData, [e.target.name]: e.target.value });
-    // setIsEditing(true);
   };
 
   const handleEdit = (field) => {

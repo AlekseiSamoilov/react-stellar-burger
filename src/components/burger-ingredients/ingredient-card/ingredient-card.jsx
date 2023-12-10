@@ -34,10 +34,6 @@ const IngredientCard = ({
 
   const handleClick = () => {
     setSelectedIngredient(ingredient);
-    // openIngredientModal();
-    // navigate(`/ingredients/${ingredient._id}`, {
-    //   state: { background: { location, ingredient } },
-    // });
     navigate(`/ingredients/${ingredient._id}`, {
       state: { modal: true, ingredient: ingredient },
     });

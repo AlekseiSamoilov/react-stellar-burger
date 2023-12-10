@@ -14,9 +14,8 @@ import {
   placeOrderStart,
   placeOrderSuccess,
 } from "../../actions/orderActions";
-import { Provider, useDispatch, useSelector } from "react-redux";
-import { setIngredients } from "../../actions/dataLoadActions";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 function MainWindow() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -38,16 +37,6 @@ function MainWindow() {
       openIngredientModal();
     }
   }, [background, openIngredientModal]);
-
-  // useEffect(() => {
-  //   request("/ingredients")
-  //     .then((result) => {
-  //       dispatch(setIngredients(result.data));
-  //     })
-  //     .catch((error) => {
-  //       console.log("Ошибка", error);
-  //     });
-  // }, [dispatch]);
 
   const openOrderModal = () => {
     setModalContent("order");
