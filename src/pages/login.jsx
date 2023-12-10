@@ -3,9 +3,9 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from ".//login.module.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { loginUser } from "../actions/authActions";
 
 export function LoginPage() {
@@ -17,6 +17,14 @@ export function LoginPage() {
     (state) => state.auth
   );
 
+  console.log(isLoggedIn);
+
+  useEffect(() => {
+    if (!isLoading && !isError && isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoading, isError, isLoggedIn, navigate]);
+
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
@@ -24,12 +32,6 @@ export function LoginPage() {
     e.preventDefault();
     dispatch(loginUser({ email, password }));
   };
-
-  useEffect(() => {
-    if (!isLoading && !isError && isLoggedIn) {
-      navigate("/");
-    }
-  }, [isLoading, isError, isLoggedIn, navigate]);
 
   return (
     <div>

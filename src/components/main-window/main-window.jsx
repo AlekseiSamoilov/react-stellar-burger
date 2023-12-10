@@ -16,32 +16,38 @@ import {
 } from "../../actions/orderActions";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { setIngredients } from "../../actions/dataLoadActions";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 function MainWindow() {
   const { isModalOpen, openModal, closeModal } = useModal();
   const [modalContent, setModalContent] = useState(null);
-  const [data, setData] = useState([]);
   const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { ingredients, bun, totalPrice } = useSelector((state) => state.burger);
-  const { allIngredients } = useSelector((state) => state.load);
+  const { ingredients, bun } = useSelector((state) => state.burger);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    request("/ingredients")
-      .then((result) => {
-        dispatch(setIngredients(result.data));
-      })
-      .catch((error) => {
-        console.log("Ошибка", error);
-      });
-  }, [dispatch]);
+  const location = useLocation();
+  const background = location.state && location.state.background;
 
   const openIngredientModal = () => {
-    setModalContent("ingredient");
+    setModalContent(true);
     openModal();
   };
+  useEffect(() => {
+    if (background) {
+      openIngredientModal();
+    }
+  }, [background, openIngredientModal]);
+
+  // useEffect(() => {
+  //   request("/ingredients")
+  //     .then((result) => {
+  //       dispatch(setIngredients(result.data));
+  //     })
+  //     .catch((error) => {
+  //       console.log("Ошибка", error);
+  //     });
+  // }, [dispatch]);
 
   const openOrderModal = () => {
     setModalContent("order");

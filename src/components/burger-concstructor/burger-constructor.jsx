@@ -84,27 +84,6 @@ const BurgerConstructor = ({ handleOrder, isLoading }) => {
               />
             ))}
         </ul>
-        {/* <ul className={`${styles.constructor_list} custom-scroll`}>
-          {ingredientsArray &&
-            ingredientsArray.map((ingredient, index) => (
-              <li
-                key={ingredient.uniqueId + index}
-                className={styles.li_element}
-              >
-                <DragIcon type="primary" className={styles.drag_icon} />
-                {ingredient && (
-                  <ConstructorElement
-                    text={ingredient.name}
-                    price={ingredient.price}
-                    thumbnail={ingredient.image}
-                    handleClose={() =>
-                      handleRemoveIngredient(ingredient.uniqueId)
-                    }
-                  />
-                )}
-              </li>
-            ))}
-        </ul> */}
         <div className={styles.locked_ingredient}>
           {bun && (
             <ConstructorElement
