@@ -58,7 +58,7 @@ const ProfileInfo = () => {
       <div className={style.input_box}>
         <Input
           placeholder="Имя"
-          value={editData.name}
+          value={editData.name || ""}
           onChange={handleChange}
           name="name"
           disabled={!isEditing.name}
@@ -70,7 +70,7 @@ const ProfileInfo = () => {
       <div className={style.input_box}>
         <Input
           placeholder="Логин"
-          value={editData.email}
+          value={editData.email || ""}
           onChange={handleChange}
           name="email"
           disabled={!isEditing.email}
@@ -83,7 +83,7 @@ const ProfileInfo = () => {
         <Input
           name="password"
           placeholder="Пароль"
-          value={editData.password}
+          value={editData.password || ""}
           type="password"
           disabled={!isEditing.password}
         />
