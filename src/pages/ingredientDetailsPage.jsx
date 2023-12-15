@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import Modal from "../components/modal/modal";
 import IngredientDetails from "../components/modal/ingredient-details/ingredient-details";
 
 const IngredientDetailsPage = () => {
@@ -11,15 +10,12 @@ const IngredientDetailsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const isModal = location.state?.modal;
-  console.log(ingredients);
 
   useEffect(() => {
     if (ingredients.length) {
       const foundIngredient = ingredients.find((item) => item._id === id);
       setIngredient(foundIngredient);
       setIsLoading(false);
-    } else {
-      console.log("no ingredients here");
     }
   }, [id, ingredients]);
 

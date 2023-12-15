@@ -5,7 +5,7 @@ import {
 import styles from ".//login.module.css";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { resetPasswordRequest } from "../actions/resetPasswordActions";
 
 export function ForgotPasswordPage() {
@@ -25,11 +25,11 @@ export function ForgotPasswordPage() {
     dispatch(resetPasswordRequest(email));
   };
 
-  useEffect(() => {
-    if (success) {
-      navigate("/reset-password");
-    }
-  }, [success, navigate]);
+  // useEffect(() => {
+  //   if (success) {
+  //     navigate("/reset-password");
+  //   }
+  // }, [success, navigate]);
 
   return (
     <div>
@@ -58,9 +58,9 @@ export function ForgotPasswordPage() {
         <div className={styles.text_container}>
           <h2 className={styles.text}>
             Вспомнили пароль?{" "}
-            <a className={styles.link} href="/login">
+            <Link className={styles.link} to="/login">
               Войти
-            </a>
+            </Link>
           </h2>
         </div>
       </div>

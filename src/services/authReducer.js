@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT_SUCCESS, LOGOUT_REQUEST, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE } from "../actions/actionTypes";
+import { LOGIN_REQUEST, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT_SUCCESS, LOGOUT_REQUEST, UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE, AUTH_CHECK_COMPLETE } from "../actions/actionTypes";
 
 const initialState = {
   user: null,
@@ -7,6 +7,7 @@ const initialState = {
   isError: false,
   errorMessage: '',
   isLoggedIn: false,
+  isAuthChecked: false,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -14,7 +15,7 @@ export const authReducer = (state = initialState, action) => {
         case LOGIN_REQUEST:
             return { ...state, isLoading: true, isError: false, errorMessage: '' };
         case LOGIN_SUCCESS:
-            console.log('LOGIN_SUCCESS payload:', action.payload);
+            // console.log('LOGIN_SUCCESS payload:', action.payload);
             return  { 
                 ...state, 
                 isLoading: false, 
@@ -37,6 +38,8 @@ export const authReducer = (state = initialState, action) => {
             };
         case UPDATE_USER_FAILURE:
             return { ...state, isLoading: false, isError: true, errorMessage: action.payload };
+        case AUTH_CHECK_COMPLETE: 
+            return { ...state, isAuthChecked: true };
 
         default:
             return state;

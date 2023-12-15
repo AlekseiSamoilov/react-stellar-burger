@@ -5,7 +5,7 @@ import {
 import styles from ".//login.module.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../actions/registerActions";
 
 export function RegisterPage() {
@@ -62,9 +62,9 @@ export function RegisterPage() {
         <div className={styles.text_container}>
           <h2 className={styles.text}>
             Уже зарегистрированы?{" "}
-            <a className={styles.link} onClick={() => navigate("/login")}>
+            <Link className={styles.link} to="/login">
               Войти
-            </a>
+            </Link>
           </h2>
         </div>
       </div>

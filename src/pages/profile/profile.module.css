@@ -50,6 +50,13 @@ border: none;
     display: flex;
     position: relative;
     align-items: center;
+    
+}
+
+.form_box {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .icon {

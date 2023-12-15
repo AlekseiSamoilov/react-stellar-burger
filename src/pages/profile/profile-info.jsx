@@ -6,16 +6,12 @@ import {
 import style from "./profile.module.css";
 
 import React, { useEffect, useState } from "react";
-import { Link, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { updateUserInfo } from "../../actions/userActions";
 import { updateUserInfo } from "../../actions/authActions";
 
 const ProfileInfo = () => {
   const authState = useSelector((state) => state.auth);
-  // console.log("Auth state:", authState);
   const { user } = authState;
-  // console.log("User data:", user);
 
   const [editData, setEditData] = useState({
     name: "",
@@ -39,7 +35,8 @@ const ProfileInfo = () => {
     setIsEditing({ ...isEditing, [field]: true });
   };
 
-  const handleSave = () => {
+  const handleSave = (e) => {
+    e.preventDefault();
     dispatch(updateUserInfo(editData));
     setIsEditing({ name: false, email: false, password: false });
   };
@@ -55,52 +52,54 @@ const ProfileInfo = () => {
 
   return (
     <div className={style.profile_info_container}>
-      <div className={style.input_box}>
-        <Input
-          placeholder="Имя"
-          value={editData.name || ""}
-          onChange={handleChange}
-          name="name"
-          disabled={!isEditing.name}
-        />
-        <div className={style.icon} onClick={() => handleEdit("name")}>
-          <EditIcon />
+      <form onSubmit={handleSave} className={style.form_box}>
+        <div className={style.input_box}>
+          <Input
+            placeholder="Имя"
+            value={editData.name || ""}
+            onChange={handleChange}
+            name="name"
+            disabled={!isEditing.name}
+          />
+          <div className={style.icon} onClick={() => handleEdit("name")}>
+            <EditIcon />
+          </div>
         </div>
-      </div>
-      <div className={style.input_box}>
-        <Input
-          placeholder="Логин"
-          value={editData.email || ""}
-          onChange={handleChange}
-          name="email"
-          disabled={!isEditing.email}
-        />
-        <div className={style.icon} onClick={() => handleEdit("email")}>
-          <EditIcon />
+        <div className={style.input_box}>
+          <Input
+            placeholder="Логин"
+            value={editData.email || ""}
+            onChange={handleChange}
+            name="email"
+            disabled={!isEditing.email}
+          />
+          <div className={style.icon} onClick={() => handleEdit("email")}>
+            <EditIcon />
+          </div>
         </div>
-      </div>
-      <div className={style.input_box}>
-        <Input
-          name="password"
-          placeholder="Пароль"
-          value={editData.password || ""}
-          type="password"
-          disabled={!isEditing.password}
-        />
-        <div className={style.icon} onClick={() => handleEdit("password")}>
-          <EditIcon />
+        <div className={style.input_box}>
+          <Input
+            name="password"
+            placeholder="Пароль"
+            value={editData.password || ""}
+            type="password"
+            disabled={!isEditing.password}
+          />
+          <div className={style.icon} onClick={() => handleEdit("password")}>
+            <EditIcon />
+          </div>
         </div>
-      </div>
-      {(isEditing.name || isEditing.email || isEditing.password) && (
-        <div className={style.button_container}>
-          <Button type="secondary" onClick={handleCancel}>
-            Отмена
-          </Button>
-          <Button type="primary" onClick={handleSave}>
-            Сохранить
-          </Button>
-        </div>
-      )}
+        {(isEditing.name || isEditing.email || isEditing.password) && (
+          <div className={style.button_container}>
+            <Button type="secondary" onClick={handleCancel} htmlType="submit">
+              Отмена
+            </Button>
+            <Button type="primary" htmlType="submit">
+              Сохранить
+            </Button>
+          </div>
+        )}
+      </form>
     </div>
   );
 };

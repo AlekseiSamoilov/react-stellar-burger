@@ -3,9 +3,9 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from ".//login.module.css";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../actions/authActions";
 
 export function LoginPage() {
@@ -13,17 +13,15 @@ export function LoginPage() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, isError, errorMessage, isLoggedIn } = useSelector(
-    (state) => state.auth
-  );
+  const { isLoading, isError, isLoggedIn } = useSelector((state) => state.auth);
 
-  console.log(isLoggedIn);
+  // console.log(isLoggedIn);
 
-  useEffect(() => {
-    if (!isLoading && !isError && isLoggedIn) {
-      navigate("/");
-    }
-  }, [isLoading, isError, isLoggedIn, navigate]);
+  // useEffect(() => {
+  //   if (!isLoading && !isError && isLoggedIn) {
+  //     navigate("/");
+  //   }
+  // }, [isLoading, isError, isLoggedIn, navigate]);
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -66,15 +64,15 @@ export function LoginPage() {
         <div className={styles.text_container}>
           <h2 className={styles.text}>
             Вы - новый пользователь?{" "}
-            <a className={styles.link} href="/register">
+            <Link className={styles.link} to="/register">
               Зарегистрироваться
-            </a>
+            </Link>
           </h2>
           <h2 className={styles.text}>
             Забыли пароль?{" "}
-            <a className={styles.link} href="/forgot-password">
+            <Link className={styles.link} to="/forgot-password">
               Восстановить пароль
-            </a>
+            </Link>
           </h2>
         </div>
       </div>

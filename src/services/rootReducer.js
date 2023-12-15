@@ -14,5 +14,4 @@ export const rootReducer = combineReducers({
     passwordReset: passwordResetReducer,
     passwordRequest: passwordRequestResetReducer,
     auth: authReducer,
-    // user: userReducer,
 });

@@ -7,7 +7,7 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../modal/ingredient-details/ingredient-details";
 import OrderDetails from "../modal/order-details/order-details";
 import { useModal } from "../../hooks/useModal";
-import { request } from "../../utils/request";
+import { request, fetchWithRefresh } from "../../utils/request";
 import { resetConstructor } from "../../actions/constructorActions";
 import {
   placeOrderFail,
@@ -45,13 +45,15 @@ function MainWindow() {
 
   // Order number
   const placeOrder = async (ingredients) => {
+    const token = localStorage.getItem("token");
     setIsLoading(true);
     dispatch(placeOrderStart());
     try {
-      const result_1 = await request("/orders", {
+      const result_1 = await fetchWithRefresh("/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: token,
         },
         body: JSON.stringify({ ingredients }),
       });

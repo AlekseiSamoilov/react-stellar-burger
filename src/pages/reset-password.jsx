@@ -25,11 +25,11 @@ export function ResetPasswordPage() {
     dispatch(resetPassword(password, token));
   };
 
-  useEffect(() => {
-    if (success) {
-      navigate("/login");
-    }
-  }, [success, navigate]);
+  // useEffect(() => {
+  //   if (success) {
+  //     navigate("/login");
+  //   }
+  // }, [success, navigate]);
 
   return (
     <div>
