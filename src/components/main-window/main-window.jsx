@@ -43,7 +43,7 @@ function MainWindow() {
     openModal();
   };
 
-  // Order number
+  // перенести placeOrder в orderActions.js
   const placeOrder = async (ingredients) => {
     const token = localStorage.getItem("token");
     setIsLoading(true);
@@ -68,6 +68,8 @@ function MainWindow() {
       setIsLoading(false);
     }
   };
+
+  // поправить после переноса placeOrder в orderActions.js
   const handleOrder = async () => {
     const ingredientIds = bun ? [bun._id] : [];
     ingredientIds.push(...ingredients.map((ingredient) => ingredient._id));

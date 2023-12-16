@@ -14,7 +14,7 @@ import { LOGIN_REQUEST,
 export const loginUser = (userData) => async (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
     try {
-        const data = await fetchWithRefresh('/auth/login', {
+        const data = await request('/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -22,9 +22,7 @@ export const loginUser = (userData) => async (dispatch) => {
             body: JSON.stringify(userData),
         });
         localStorage.setItem('refreshToken', data.refreshToken);
-        // console.log("refreshToken:", data.refreshToken);
         localStorage.setItem('token', data.accessToken);
-        // console.log("accessToken:", data.accessToken);
         localStorage.setItem('userData', JSON.stringify(data.user));
         dispatch({ type: LOGIN_SUCCESS, payload: data });
         dispatch(authCheckComplete());
@@ -38,7 +36,7 @@ export const logoutUser = () => async (dispatch) => {
     dispatch({ type: LOGOUT_REQUEST });
     try {
         const refreshToken = localStorage.getItem('refreshToken');
-        const data = await fetchWithRefresh('/auth/logout', {
+        const data = await request('/auth/logout', {
             method: 'POST',
             headers: {
                 "Content-Type": 'application/json',
@@ -60,11 +58,9 @@ export const logoutUser = () => async (dispatch) => {
     }
 };
 
-export const updateUserInfo = (userData) => async (dispatch, getState) => {
+export const updateUserInfo = (userData) => async (dispatch) => {
     dispatch({ type: UPDATE_USER_REQUEST });
     try {
-        // const { auth } = getState();
-        // const accessToken = auth.accessToken;
         const token = localStorage.getItem('token');
         const data = await fetchWithRefresh('/auth/user', {
             method: 'PATCH',
@@ -88,9 +84,7 @@ export const updateUserInfo = (userData) => async (dispatch, getState) => {
 };
 
 export const checkAndRestoreSession = () => async (dispatch) => {
-    // console.log('checkAndRestoreSession Called')
     const token = localStorage.getItem('token');
-    // console.log(token)
 
     if (!token) {
         dispatch({ type: LOGIN_FAILURE });

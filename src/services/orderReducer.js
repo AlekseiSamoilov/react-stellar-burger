@@ -15,6 +15,7 @@ export const orderReducer = (state = initialOrderState, action) => {
             isLoading: true,
         };
     case PLACE_ORDER_SUCCESS:
+      // console.log(action.payload);
         return {
             ...state,
             isLoading: false,

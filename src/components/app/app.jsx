@@ -13,7 +13,6 @@ import { ResetPasswordPage } from "../../pages/reset-password";
 import Profile from "../../pages/profile/profile";
 import { PageNotFound } from "../../pages/error404";
 import ProtectedRouteElement from "../protected-route-element/protected-route-element";
-import LocalStorageRestoration from "../protected-route-element/localStorageRestoration";
 import IngredientDetailsPage from "../../pages/ingredientDetailsPage";
 import ModalWrapper from "../modal-wrapper";
 import DataLoader from "../data-loader/data-loader";
@@ -29,67 +28,63 @@ function App() {
   }, [dispatch]);
 
   return (
-    // <Provider store={store}>
     <BrowserRouter>
       <DndProvider backend={HTML5Backend}>
         <div className={styles.app}>
-          <LocalStorageRestoration>
-            <DataLoader />
-            <AppHeader />
-            <Routes>
-              <Route path="/" element={<MainWindow />} />
-              <Route
-                path="/login"
-                element={
-                  <ProtectedRouteElement onlyUnAuth={true}>
-                    <LoginPage />
-                  </ProtectedRouteElement>
-                }
-              />
-              <Route
-                path="/register"
-                element={
-                  <ProtectedRouteElement onlyUnAuth={true}>
-                    <RegisterPage />
-                  </ProtectedRouteElement>
-                }
-              />
-              <Route
-                path="/forgot-password"
-                element={
-                  <ProtectedRouteElement onlyUnAuth={true}>
-                    <ForgotPasswordPage />
-                  </ProtectedRouteElement>
-                }
-              />
-              <Route
-                path="/reset-password"
-                element={
-                  <ProtectedRouteElement onlyUnAuth={true}>
-                    <ResetPasswordPage />
-                  </ProtectedRouteElement>
-                }
-              />
-              <Route
-                path="/profile/*"
-                element={
-                  <ProtectedRouteElement>
-                    <Profile />
-                  </ProtectedRouteElement>
-                }
-              />
-              <Route
-                path="/ingredients/:id"
-                element={<IngredientDetailsPage />}
-              />
-              <Route path="/404" element={<PageNotFound />} />
-            </Routes>
-            <ModalWrapper />
-          </LocalStorageRestoration>
+          <DataLoader />
+          <AppHeader />
+          <Routes>
+            <Route path="/" element={<MainWindow />} />
+            <Route
+              path="/login"
+              element={
+                <ProtectedRouteElement onlyUnAuth={true}>
+                  <LoginPage />
+                </ProtectedRouteElement>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <ProtectedRouteElement onlyUnAuth={true}>
+                  <RegisterPage />
+                </ProtectedRouteElement>
+              }
+            />
+            <Route
+              path="/forgot-password"
+              element={
+                <ProtectedRouteElement onlyUnAuth={true}>
+                  <ForgotPasswordPage />
+                </ProtectedRouteElement>
+              }
+            />
+            <Route
+              path="/reset-password"
+              element={
+                <ProtectedRouteElement onlyUnAuth={true}>
+                  <ResetPasswordPage />
+                </ProtectedRouteElement>
+              }
+            />
+            <Route
+              path="/profile/*"
+              element={
+                <ProtectedRouteElement>
+                  <Profile />
+                </ProtectedRouteElement>
+              }
+            />
+            <Route
+              path="/ingredients/:id"
+              element={<IngredientDetailsPage />}
+            />
+            <Route path="/404" element={<PageNotFound />} />
+          </Routes>
+          <ModalWrapper />
         </div>
       </DndProvider>
     </BrowserRouter>
-    // </Provider>
   );
 }
 
