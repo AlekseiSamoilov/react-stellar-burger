@@ -7,12 +7,14 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
-
+import { useLocation, useNavigate } from "react-router-dom";
 const IngredientCard = ({
   ingredient,
   openIngredientModal,
   setSelectedIngredient,
 }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [{ isDragging }, dragRef] = useDrag({
     type: "ingredient",
     item: { ...ingredient, type: ingredient.type },
@@ -22,11 +24,6 @@ const IngredientCard = ({
   });
   const opacity = isDragging ? 0.5 : 1;
 
-  // const ingredientCount = useSelector(
-  //   (state) =>
-  //     state.burger.ingredients.filter((i) => i._id === ingredient._id).length,
-  //   console.log("count called")
-  // );
   const ingredientCount = useSelector((state) => {
     const countIngredients = state.burger.ingredients.filter(
       (i) => i._id === ingredient._id
@@ -37,7 +34,9 @@ const IngredientCard = ({
 
   const handleClick = () => {
     setSelectedIngredient(ingredient);
-    openIngredientModal();
+    navigate(`/ingredients/${ingredient._id}`, {
+      state: { modal: true, ingredient: ingredient },
+    });
   };
 
   return (
@@ -46,7 +45,6 @@ const IngredientCard = ({
       className={styles.container}
       style={{ opacity }}
       onClick={() => {
-        // handleIngredientClick(ingredient);
         handleClick();
       }}
     >

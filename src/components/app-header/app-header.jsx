@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./app-header.module.css";
 import {
   BurgerIcon,
@@ -11,22 +12,22 @@ function AppHeader() {
     <header className={styles.header_main}>
       <div className={styles.header}>
         <div className={styles.header_element_duo}>
-          <a href="#" className={styles.header_element_white}>
+          <Link to="/" className={styles.header_element_white}>
             <BurgerIcon />
             <p className="text text_type_main-small">Конструктор</p>
-          </a>
-          <a href="#" className={styles.header_element_blue}>
+          </Link>
+          <Link to="#" className={styles.header_element_blue}>
             <ListIcon type="secondary" />
             <p className="text text_type_main-small">Лента заказов</p>
-          </a>
+          </Link>
         </div>
         <div className={styles.logo}>
           <Logo />
         </div>
-        <a href="#" className={styles.header_element_blue}>
+        <Link to="/profile" className={styles.header_element_blue}>
           <ProfileIcon type="secondary" />
           <p className="text text_type_main-small">Личный кабинет</p>
-        </a>
+        </Link>
       </div>
     </header>
   );

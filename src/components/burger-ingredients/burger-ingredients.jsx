@@ -13,16 +13,6 @@ const BurgerIngredients = ({ openIngredientModal, setSelectedIngredient }) => {
   const containerRef = useRef(null);
   const { ingredients } = useSelector((state) => state.burger);
 
-  // const handleIngredientClick = (ingredients) => {
-  //   if (ingredients.type === "bun") {
-  //     // dispatch({ type: ADD_BUN, bun: ingredients });
-  //     dispatch(addBun(ingredients.bun));
-  //   } else {
-  //     // dispatch({ type: ADD_INGREDIENT, ingredient: ingredients });
-  //     dispatch(addIngredient(ingredients.ingredient));
-  //   }
-  // };
-
   const handleScroll = () => {
     const container = containerRef.current;
     if (!container) {
