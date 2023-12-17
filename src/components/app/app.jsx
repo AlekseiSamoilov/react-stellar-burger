@@ -1,7 +1,6 @@
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import MainWindow from "../main-window/main-window";
-import { store } from "../../services/store";
 import { Provider, useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -17,7 +16,6 @@ import IngredientDetailsPage from "../../pages/ingredientDetailsPage";
 import ModalWrapper from "../modal-wrapper";
 import DataLoader from "../data-loader/data-loader";
 import { useEffect } from "react";
-// import { checkAuthStatus } from "../../actions/authActions";
 import { checkAndRestoreSession } from "../../actions/authActions";
 
 function App() {
