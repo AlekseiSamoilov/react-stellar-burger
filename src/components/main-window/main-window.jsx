@@ -16,6 +16,7 @@ import {
 } from "../../actions/orderActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import OrderInformation from "../modal/order-information/order-information";
 
 function MainWindow() {
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -29,9 +30,10 @@ function MainWindow() {
   const background = location.state && location.state.background;
 
   const openIngredientModal = () => {
-    setModalContent(true);
+    setModalContent("ingredient");
     openModal();
   };
+
   useEffect(() => {
     if (background) {
       openIngredientModal();
@@ -69,7 +71,6 @@ function MainWindow() {
     }
   };
 
-  // поправить после переноса placeOrder в orderActions.js
   const handleOrder = async () => {
     const ingredientIds = bun ? [bun._id] : [];
     ingredientIds.push(...ingredients.map((ingredient) => ingredient._id));
@@ -90,6 +91,9 @@ function MainWindow() {
           )}
           {modalContent === "order" && (
             <OrderDetails orderNumber={orderNumber} />
+          )}
+          {modalContent === "order-information" && (
+            <OrderInformation orderNumber={orderNumber} />
           )}
         </Modal>
       )}

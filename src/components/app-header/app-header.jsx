@@ -16,7 +16,7 @@ function AppHeader() {
             <BurgerIcon />
             <p className="text text_type_main-small">Конструктор</p>
           </Link>
-          <Link to="#" className={styles.header_element_blue}>
+          <Link to="/feed" className={styles.header_element_blue}>
             <ListIcon type="secondary" />
             <p className="text text_type_main-small">Лента заказов</p>
           </Link>

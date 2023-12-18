@@ -1,0 +1,71 @@
+.order_container {
+    width: 620px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    padding-top: 122px;
+    
+}
+
+.order_number {
+    align-self: center;
+    margin-bottom: 40px;
+    font-family: Iceland;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+    display: flex;
+}
+
+.title {
+    margin-bottom: 12px;
+    font-family: JetBrains Mono;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+    text-align: left;
+}
+
+.status {
+    font-family: JetBrains Mono;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    color: rgba(0, 204, 204, 1);
+    margin-bottom: 60px;
+}
+
+.element_container {
+    margin: 24px 0 40px 0;
+    overflow: auto;
+    height: 366px;
+    padding-right: 15px;
+}
+
+.bottom_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.time_stamp {
+font-family: JetBrains Mono;
+font-size: 16px;
+font-weight: 400;
+line-height: 24px;
+color: rgba(133, 133, 173, 1);
+}
+
+.price {
+    display: flex;
+}
+
+.price_text {
+font-family: Iceland;
+font-size: 28px;
+font-weight: 400;
+line-height: 24px;
+padding: 0 8px;
+}

@@ -17,8 +17,10 @@ import IngredientDetailsPage from "../../pages/ingredientDetailsPage";
 import ModalWrapper from "../modal-wrapper";
 import DataLoader from "../data-loader/data-loader";
 import { useEffect } from "react";
+import Feed from "../../pages/feed/feed";
 // import { checkAuthStatus } from "../../actions/authActions";
 import { checkAndRestoreSession } from "../../actions/authActions";
+import OrderDetailsPage from "../../pages/feed/order-details-page";
 
 function App() {
   const dispatch = useDispatch();
@@ -78,6 +80,12 @@ function App() {
             <Route
               path="/ingredients/:id"
               element={<IngredientDetailsPage />}
+            />
+            <Route path="/feed" element={<Feed />} />
+            <Route path="/feed/:number" element={<OrderDetailsPage />} />
+            <Route
+              path="/profile/orders/:number"
+              element={<OrderDetailsPage />}
             />
             <Route path="/404" element={<PageNotFound />} />
           </Routes>
