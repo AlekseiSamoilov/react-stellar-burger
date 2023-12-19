@@ -17,21 +17,27 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import OrderInformation from "../modal/order-information/order-information";
+import { openModal, closeModal, placeOrder } from "../../actions/orderActions";
 
 function MainWindow() {
-  const { isModalOpen, openModal, closeModal } = useModal();
+  // const { isModalOpen, openModal, closeModal } = useModal();
   const [modalContent, setModalContent] = useState(null);
   const [selectedIngredient, setSelectedIngredient] = useState(null);
-  const [orderNumber, setOrderNumber] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const orderNumber = useSelector((state) => state.order.orderNumber);
+  // const [orderNumber, setOrderNumber] = useState(null);
+  // const [isLoading, setIsLoading] = useState(false);
   const { ingredients, bun } = useSelector((state) => state.burger);
   const dispatch = useDispatch();
   const location = useLocation();
   const background = location.state && location.state.background;
+  const showModal = useSelector((state) => state.order.showModal);
 
+  const handleOpenModal = () => {
+    dispatch(openModal());
+  };
   const openIngredientModal = () => {
-    setModalContent("ingredient");
-    openModal();
+    setModalContent(true);
+    handleOpenModal();
   };
 
   useEffect(() => {
@@ -40,64 +46,48 @@ function MainWindow() {
     }
   }, [background, openIngredientModal]);
 
+  useEffect(() => {
+    if (orderNumber) {
+      openOrderModal();
+    }
+  }, [orderNumber]);
+
   const openOrderModal = () => {
     setModalContent("order");
-    openModal();
+    handleOpenModal();
   };
 
-  // перенести placeOrder в orderActions.js
-  const placeOrder = async (ingredients) => {
-    const token = localStorage.getItem("token");
-    setIsLoading(true);
-    dispatch(placeOrderStart());
-    try {
-      const result_1 = await fetchWithRefresh("/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify({ ingredients }),
-      });
-      dispatch(placeOrderSuccess());
-      setOrderNumber(result_1.order.number);
-      openOrderModal();
-      dispatch(resetConstructor());
-    } catch (error) {
-      console.log(error);
-      dispatch(placeOrderFail());
-    } finally {
-      setIsLoading(false);
-    }
+  const handleCloseModal = () => {
+    dispatch(closeModal());
   };
 
   const handleOrder = async () => {
     const ingredientIds = bun ? [bun._id] : [];
     ingredientIds.push(...ingredients.map((ingredient) => ingredient._id));
     if (bun) ingredientIds.push(bun._id);
-    await placeOrder(ingredientIds);
+    dispatch(placeOrder(ingredientIds));
   };
-
+  console.log({ showModal, modalContent, orderNumber });
   return (
     <main className={styles.main_window}>
       <BurgerIngredients
         openIngredientModal={openIngredientModal}
         setSelectedIngredient={setSelectedIngredient}
       />
-      {isModalOpen && (
-        <Modal closeModal={closeModal}>
+      {showModal && (
+        <Modal closeModal={handleCloseModal}>
           {modalContent === "ingredient" && (
             <IngredientDetails ingredient={selectedIngredient} />
           )}
           {modalContent === "order" && (
             <OrderDetails orderNumber={orderNumber} />
           )}
-          {modalContent === "order-information" && (
+          {/* {modalContent === "order-information" && (
             <OrderInformation orderNumber={orderNumber} />
-          )}
+          )} */}
         </Modal>
       )}
-      <BurgerConstructor handleOrder={handleOrder} isLoading={isLoading} />
+      <BurgerConstructor handleOrder={handleOrder} />
     </main>
   );
 }

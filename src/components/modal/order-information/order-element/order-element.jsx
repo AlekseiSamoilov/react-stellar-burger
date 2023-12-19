@@ -1,14 +1,14 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./order-element.module.css";
+import { useSelector } from "react-redux";
 
 const OrderElement = ({}) => {
+  // const { ingredient } = useSelector((state) => state.load.allIngredients);
   return (
     <div className={style.element_container}>
       <div className={style.item_container}>
         <div className={style.item}></div>
-        <p className={style.item_name}>
-          Филе Люминесцентного тетраодонтимформа
-        </p>
+        <p className={style.item_name}></p>
       </div>
       <div className={style.price_container}>
         <p className={style.price_count}>1</p>

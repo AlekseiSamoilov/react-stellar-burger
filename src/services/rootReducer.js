@@ -1,17 +1,17 @@
 import { combineReducers } from "redux";
-import { constrcutorWork } from "./constructorReducer";
+import { constrcutorReducer } from "./constructorReducer";
 import { orderReducer } from "./orderReducer";
 import { loadData } from "./dataLoadReducer";
 import { passwordResetReducer, passwordRequestResetReducer } from "./resetPasswordReducer";
 import { authReducer } from "./authReducer";
-// import { userReducer } from "./userReducer";
-// import { registerReducer } from "./registerReducer";
+import { ordersReducer } from "./ordersReducer";
 
 export const rootReducer = combineReducers({
-    burger: constrcutorWork,
+    burger: constrcutorReducer,
     order: orderReducer,
     load: loadData,
     passwordReset: passwordResetReducer,
     passwordRequest: passwordRequestResetReducer,
     auth: authReducer,
+    orders: ordersReducer,
 });

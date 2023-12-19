@@ -1,10 +1,13 @@
 // orderReducer.js
-import { PLACE_ORDER_FAIL, PLACE_ORDER_START, PLACE_ORDER_SUCCESS } from '../actions/actionTypes';
+import { CLOSE_MODAL, OPEN_MODAL, PLACE_ORDER_FAIL, PLACE_ORDER_START, PLACE_ORDER_SUCCESS } from '../actions/actionTypes';
 
 const initialOrderState = {
   order: null,
   isLoading: false,
   error: null,
+  showModal: false,
+  orderNumber: null,
+  modalContent: undefined,
 };
 
 export const orderReducer = (state = initialOrderState, action) => {
@@ -19,6 +22,9 @@ export const orderReducer = (state = initialOrderState, action) => {
             ...state,
             isLoading: false,
             order: action.payload,
+            showModal: true,
+            orderNumber: action.payload,
+            modalContent: "order",
         };
     case PLACE_ORDER_FAIL:
         return {
@@ -26,6 +32,17 @@ export const orderReducer = (state = initialOrderState, action) => {
             isLoading: false,
             error: action.payload,
         };
+    case OPEN_MODAL:
+        return {
+          ...state,
+          showModal: true,
+        };
+    case CLOSE_MODAL:
+        return {
+          ...state,
+          showModal: false,
+        };
+
       default:
           return state;
   }
