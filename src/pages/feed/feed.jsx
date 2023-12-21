@@ -25,6 +25,29 @@ const Feed = () => {
   const completedOrders = orders.filter((order) => order.status === "done");
   const inProgressOrders = orders.filter((order) => order.status === "pending");
 
+  const splitOrders = (orders) => {
+    const groups = [];
+    for (let i = 0; i < orders.length; i += 20) {
+      groups.push(orders.slice(i, i + 10));
+    }
+    return groups;
+  };
+
+  const orderColumns = (orderGroups) => {
+    return orderGroups.map((group, index) => (
+      <div key={index} className={style.feed_column}>
+        {group.map((order) => (
+          <p key={order._id} className="text text_type_digits-default">
+            {order.number}
+          </p>
+        ))}
+      </div>
+    ));
+  };
+
+  const completedOrderGroups = splitOrders(completedOrders);
+  const inProgressOrderGroups = splitOrders(inProgressOrders);
+
   return (
     <div className={style.feed_container}>
       <h1 className={style.feed_title}>Лента заказов</h1>
@@ -38,19 +61,13 @@ const Feed = () => {
           <div className={style.header_container}>
             <div className={style.feed_ready}>
               <h2 className={style.info_title}>Готовы:</h2>
-              {completedOrders.slice(0, 10).map((order) => (
-                <p key={order._id} className="text text_type_digits-default">
-                  {order.number}
-                </p>
-              ))}
+              <div className={style.feed_number_column}>
+                {orderColumns(completedOrderGroups)}
+              </div>
             </div>
             <div className={style.feed_stady}>
               <h2 className={style.info_title}>В работе:</h2>
-              {inProgressOrders.slice(0, 10).map((order) => (
-                <p key={order._id} className="text text_type_digits-default">
-                  {order.number}
-                </p>
-              ))}
+              {orderColumns(inProgressOrderGroups)}
             </div>
           </div>
           <div className={style.total}>

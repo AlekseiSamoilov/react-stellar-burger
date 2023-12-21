@@ -33,7 +33,10 @@ padding: 40px 0;
     width: 272px;
     color: rgba(0, 204, 204, 1);
 }
-
+.feed_number_column {
+    display: flex;
+    gap: 10px;
+}
 .info_title {
     margin-bottom: 24px;
     color: white;
@@ -46,4 +49,8 @@ padding: 40px 0;
 
 .total {
     margin-top: 60px;
+}
+
+.feed_column {
+    flex: 1;
 }
