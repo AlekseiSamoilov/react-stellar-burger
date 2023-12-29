@@ -1,8 +1,6 @@
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import MainWindow from "../main-window/main-window";
-import { store } from "../../services/store";
-import { Provider, useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -18,16 +16,23 @@ import ModalWrapper from "../modal-wrapper";
 import DataLoader from "../data-loader/data-loader";
 import { useEffect } from "react";
 import Feed from "../../pages/feed/feed";
-// import { checkAuthStatus } from "../../actions/authActions";
 import { checkAndRestoreSession } from "../../actions/authActions";
+import Modal from "../modal/modal";
+import OrderInformation from "../modal/order-information/order-information";
+import { useSelector, useDispatch } from "react-redux";
+import { closeModal } from "../../actions/orderActions";
 import OrderDetailsPage from "../../pages/feed/order-details-page";
 
 function App() {
   const dispatch = useDispatch();
+  // const navigateBack = usePreviousPath();
 
   useEffect(() => {
     dispatch(checkAndRestoreSession());
   }, [dispatch]);
+
+  const showModal = useSelector((state) => state.order.showModal);
+  const currentOrder = useSelector((state) => state.orders.currentOrder);
 
   return (
     <BrowserRouter>
@@ -89,6 +94,11 @@ function App() {
             />
             <Route path="/404" element={<PageNotFound />} />
           </Routes>
+          {showModal && currentOrder && (
+            <Modal closeModal={closeModal}>
+              <OrderInformation order={currentOrder} />
+            </Modal>
+          )}
           <ModalWrapper />
         </div>
       </DndProvider>

@@ -16,8 +16,9 @@ export const placeOrderFail = (error) => ({
     payload: error,
 });
 
-export const openModal = () => ({
+export const openModal = (modalContent) => ({
     type: OPEN_MODAL,
+    payload: modalContent,
 });
 
 export const closeModal = () => ({
@@ -39,6 +40,7 @@ export const placeOrder = (ingredients) => async (dispatch) => {
       });
       dispatch(placeOrderSuccess(result.order.number));
       dispatch(resetConstructor());
+
     } catch (error) {
       console.log(error);
       dispatch(placeOrderFail(error));

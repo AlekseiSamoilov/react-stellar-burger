@@ -8,6 +8,7 @@ const initialOrderState = {
   showModal: false,
   orderNumber: null,
   modalContent: undefined,
+  showOrderDetails: false,
 };
 
 export const orderReducer = (state = initialOrderState, action) => {
@@ -24,7 +25,7 @@ export const orderReducer = (state = initialOrderState, action) => {
             order: action.payload,
             showModal: true,
             orderNumber: action.payload,
-            modalContent: "order",
+            showOrderDetails: true,
         };
     case PLACE_ORDER_FAIL:
         return {
@@ -36,11 +37,14 @@ export const orderReducer = (state = initialOrderState, action) => {
         return {
           ...state,
           showModal: true,
+          modalContent: action.payload,
         };
     case CLOSE_MODAL:
         return {
           ...state,
           showModal: false,
+          modalContent: undefined,
+          showOrderDetails: false,
         };
 
       default:

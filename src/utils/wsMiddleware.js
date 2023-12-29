@@ -13,7 +13,6 @@ const wsMiddleware = (store) => (next) => (action) => {
 
             socket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
-                // console.log(event.data)
                 if (data.success) {
                     store.dispatch({ type: UPDATE_ORDERS, payload: data.orders });
                 }

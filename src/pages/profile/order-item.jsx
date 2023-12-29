@@ -1,9 +1,12 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./profile.module.css";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentOrder } from "../../actions/ordersActions";
 
-const OrderItem = ({ order }) => {
+const OrderItem = ({ order, fromProfile }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const ingredientsData = useSelector((state) => state.load.allIngredients);
 
   const ingredientsPrice = order.ingredients.map(
@@ -16,8 +19,15 @@ const OrderItem = ({ order }) => {
     (id) => ingredientsData.find((ingredient) => ingredient._id === id)?.image
   );
 
+  const openOrderModal = () => {
+    dispatch(setCurrentOrder(order));
+    const path = fromProfile
+      ? `/profile/orders/${order.number}`
+      : `/feed/${order.number}`;
+    navigate(path, { state: { modal: true, order: order } });
+  };
   return (
-    <Link to={`/feed/${order.number}`} className={style.burger_container}>
+    <div onClick={openOrderModal} className={style.burger_container}>
       <div className={style.burger_item_box}>
         <div className={style.header}>
           <span className={style.order_number}>#{order.number}</span>
@@ -45,7 +55,7 @@ const OrderItem = ({ order }) => {
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

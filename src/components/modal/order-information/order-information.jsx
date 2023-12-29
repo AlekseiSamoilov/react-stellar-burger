@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 
 const OrderInformation = ({ order }) => {
   const ingredientsData = useSelector((state) => state.load.allIngredients);
-  // const ingredientIds = order.ingredients;
   const ingredientCounts = order.ingredients.reduce((acc, id) => {
     const ingredient = ingredientsData.find((item) => item._id === id);
     if (ingredient && ingredient.type === "bun") {

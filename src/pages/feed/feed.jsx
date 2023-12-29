@@ -20,7 +20,7 @@ const Feed = () => {
   }, [dispatch]);
 
   const orders = useSelector((state) => state.orders.orders);
-  console.log(orders);
+  // console.log(orders);
 
   const completedOrders = orders.filter((order) => order.status === "done");
   const inProgressOrders = orders.filter((order) => order.status === "pending");
@@ -54,7 +54,7 @@ const Feed = () => {
       <div className={style.feed_window}>
         <div className={`${style.feed_qu} custom-scroll`}>
           {orders.map((order) => (
-            <OrderItem key={order._id} order={order} />
+            <OrderItem key={order._id} order={order} fromProfile={false} />
           ))}
         </div>
         <div className={style.feed_info}>
