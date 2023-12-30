@@ -25,7 +25,6 @@ import OrderDetailsPage from "../../pages/feed/order-details-page";
 
 function App() {
   const dispatch = useDispatch();
-  // const navigateBack = usePreviousPath();
 
   useEffect(() => {
     dispatch(checkAndRestoreSession());

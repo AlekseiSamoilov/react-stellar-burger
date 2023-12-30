@@ -48,6 +48,14 @@ const Feed = () => {
   const completedOrderGroups = splitOrders(completedOrders);
   const inProgressOrderGroups = splitOrders(inProgressOrders);
 
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+
+  const ordersToday = orders.filter((order) => {
+    const orderDate = new Date(order.createdAt);
+    return orderDate >= startOfToday;
+  });
+
   return (
     <div className={style.feed_container}>
       <h1 className={style.feed_title}>Лента заказов</h1>
@@ -78,7 +86,7 @@ const Feed = () => {
           </div>
           <div className={style.total}>
             <h3 className={style.total_title}>Выполнено сегодня:</h3>
-            <p className="text text_type_digits-large">138</p>
+            <p className="text text_type_digits-large">{ordersToday.length}</p>
           </div>
         </div>
       </div>

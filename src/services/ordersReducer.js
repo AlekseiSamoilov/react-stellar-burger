@@ -24,7 +24,6 @@ export const ordersReducer = (state = initialState, action) => {
                 currentOrder: action.payload,
             };
         case FETCH_ORDER_DETAILS_SUCCESS:
-            console.log("Updating current order:", action.payload);
             return {
                 ...state,
                 currentOrder: action.payload,

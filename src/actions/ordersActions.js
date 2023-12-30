@@ -23,14 +23,14 @@ export const fetchOrderDetails = (orderNumber) => async (dispatch) => {
   try {
     const response = await fetch(`https://norma.nomoreparties.space/api/orders/${orderNumber}`);
     const data = await response.json();
-    console.log("Server response for order details:", data);
+    // console.log(data);
 
     if (response.ok && data.orders && data.orders.length > 0) {
       dispatch({ type: FETCH_ORDER_DETAILS_SUCCESS, payload: data.orders[0] });
     } else {
-      console.error('Server Error:', data.message);
+      console.error('Error:', data.message);
     }
   } catch (error) {
-    console.error('Network Error:', error);
+    console.error('Error:', error);
   }
 };

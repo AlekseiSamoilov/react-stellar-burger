@@ -12,7 +12,6 @@ import {
 const OrderHistory = () => {
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.orders.userOrders);
-  console.log("state from OrderHistory:", orders);
 
   useEffect(() => {
     let accessToken = localStorage.getItem("token");
@@ -32,7 +31,6 @@ const OrderHistory = () => {
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log("WebSocket data received:", data);
       if (data.success) {
         const sortedOrders = data.orders.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)

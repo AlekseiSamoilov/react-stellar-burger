@@ -26,7 +26,6 @@ export const closeModal = () => ({
 });
 
 export const placeOrder = (ingredients) => async (dispatch) => {
-    console.log("palceOrder Called")
     const token = localStorage.getItem("token");
     dispatch(placeOrderStart());
     try {
