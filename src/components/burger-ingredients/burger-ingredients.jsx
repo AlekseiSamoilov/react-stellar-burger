@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types";
 import { useDispatch, useSelector } from "react-redux";
 
-const BurgerIngredients = ({ openIngredientModal, setSelectedIngredient }) => {
+const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState("bun");
   const dispatch = useDispatch();
   const { allIngredients } = useSelector((state) => state.load);
@@ -110,11 +110,8 @@ const BurgerIngredients = ({ openIngredientModal, setSelectedIngredient }) => {
           <div id="bun" className={styles.ingredient_item}>
             {buns.map((item, index) => (
               <IngredientCard
-                openIngredientModal={openIngredientModal}
                 key={index}
                 ingredient={item}
-                setSelectedIngredient={setSelectedIngredient}
-                // handleIngredientClick={handleIngredientClick}
                 count={ingredients[item._id]?.count || 0}
                 index={index}
               />
@@ -126,9 +123,6 @@ const BurgerIngredients = ({ openIngredientModal, setSelectedIngredient }) => {
               <IngredientCard
                 key={index}
                 ingredient={item}
-                openIngredientModal={openIngredientModal}
-                setSelectedIngredient={setSelectedIngredient}
-                // handleIngredientClick={handleIngredientClick}
                 count={ingredients[item._id]?.count || 0}
                 index={index}
               />
@@ -140,9 +134,6 @@ const BurgerIngredients = ({ openIngredientModal, setSelectedIngredient }) => {
               <IngredientCard
                 key={index}
                 ingredient={item}
-                openIngredientModal={openIngredientModal}
-                setSelectedIngredient={setSelectedIngredient}
-                // handleIngredientClick={handleIngredientClick}
                 index={index}
                 count={ingredients[item._id]?.count || 0}
               />
@@ -152,11 +143,6 @@ const BurgerIngredients = ({ openIngredientModal, setSelectedIngredient }) => {
       </div>
     </div>
   );
-};
-
-BurgerIngredients.propTypes = {
-  openIngredientModal: PropTypes.func.isRequired,
-  setSelectedIngredient: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

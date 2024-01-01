@@ -1,16 +1,12 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect } from "react";
 import styles from "./main-window.module.css";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-concstructor/burger-constructor";
-import { useState } from "react";
-import { useModal } from "../../hooks/useModal";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { openModal, closeModal, placeOrder } from "../../actions/orderActions";
+import { openModal, placeOrder } from "../../actions/orderActions";
 
 function MainWindow() {
-  const { isModalOpen, openModal, closeModal } = useModal();
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
   const { ingredients, bun } = useSelector((state) => state.burger);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -35,10 +31,7 @@ function MainWindow() {
 
   return (
     <main className={styles.main_window}>
-      <BurgerIngredients
-        openIngredientModal={openIngredientModal}
-        setSelectedIngredient={setSelectedIngredient}
-      />
+      <BurgerIngredients />
       <BurgerConstructor handleOrder={handleOrder} />
     </main>
   );

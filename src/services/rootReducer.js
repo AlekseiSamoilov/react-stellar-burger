@@ -5,6 +5,7 @@ import { loadData } from "./dataLoadReducer";
 import { passwordResetReducer, passwordRequestResetReducer } from "./resetPasswordReducer";
 import { authReducer } from "./authReducer";
 import { ordersReducer } from "./ordersReducer";
+import { registerReducer } from "./registerReducer";
 
 export const rootReducer = combineReducers({
     burger: constrcutorReducer,
@@ -14,4 +15,5 @@ export const rootReducer = combineReducers({
     passwordRequest: passwordRequestResetReducer,
     auth: authReducer,
     orders: ordersReducer,
+    register: registerReducer,
 });

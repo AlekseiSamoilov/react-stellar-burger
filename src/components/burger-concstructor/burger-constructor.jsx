@@ -131,7 +131,7 @@ const BurgerConstructor = ({ handleOrder }) => {
 
 BurgerConstructor.propTypes = {
   handleOrder: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  // isLoading: PropTypes.bool.isRequired,
 };
 
 export default BurgerConstructor;

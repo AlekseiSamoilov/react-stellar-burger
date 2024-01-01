@@ -4,14 +4,15 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from ".//login.module.css";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { registerUser } from "../actions/registerActions";
 
 export function RegisterPage() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const error = useSelector((state) => state.register.isError);
+  const errorMessage = useSelector((state) => state.register.errorMessage);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -26,6 +27,7 @@ export function RegisterPage() {
     <div>
       <div className={styles.container}>
         <h1 className={styles.title}>Регистрация</h1>
+        {error && <div className={styles.error_message}>{errorMessage}</div>}
         <form onSubmit={handleSubmit}>
           <div className={styles.input_container}>
             <Input
