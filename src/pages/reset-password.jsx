@@ -3,18 +3,15 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from ".//login.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { resetPassword } from "../actions/resetPasswordActions";
 
 export function ResetPasswordPage() {
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
-  const { loading, error, success } = useSelector(
-    (state) => state.passwordReset
-  );
+  const { loading } = useSelector((state) => state.passwordReset);
 
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const handleTokenChange = (e) => setToken(e.target.value);
@@ -23,12 +20,6 @@ export function ResetPasswordPage() {
     e.preventDefault();
     dispatch(resetPassword(password, token));
   };
-
-  // useEffect(() => {
-  //   if (success) {
-  //     navigate("/login");
-  //   }
-  // }, [success, navigate]);
 
   return (
     <div>

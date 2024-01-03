@@ -1,4 +1,4 @@
-import styles from ".//login.module.css";
+import styles from "../login.module.css";
 
 export function PageNotFound() {
   return (

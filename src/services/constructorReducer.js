@@ -9,7 +9,7 @@ const initialState = {
     order: null,
 };
 
-export function constrcutorReducer(state = initialState, action) {
+export function constructorReducer(state = initialState, action) {
     switch (action.type) {
         case ADD_INGREDIENT:         
               return {

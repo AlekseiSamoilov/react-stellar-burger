@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Modal from "./modal/modal";
-import IngredientDetails from "./modal/ingredient-details/ingredient-details";
-import OrderInformation from "./modal/order-information/order-information";
-import OrderDetails from "./modal/order-details/order-details";
+import Modal from "./modal";
+import IngredientDetails from "./ingredient-details/ingredient-details";
+import OrderInformation from "./order-information/order-information";
+import OrderDetails from "./order-details/order-details";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal as closeReduxModal } from "../actions/orderActions";
+import { closeModal as closeReduxModal } from "../../actions/orderActions";
 
 function ModalWrapper() {
   const navigate = useNavigate();

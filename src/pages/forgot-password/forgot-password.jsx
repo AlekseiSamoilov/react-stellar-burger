@@ -2,19 +2,16 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from ".//login.module.css";
-import { useState, useEffect } from "react";
+import styles from "../login.module.css";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
-import { resetPasswordRequest } from "../actions/resetPasswordActions";
+import { Link } from "react-router-dom";
+import { resetPasswordRequest } from "../../actions/resetPasswordActions";
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { loading, error, success } = useSelector(
-    (state) => state.passwordRequest
-  );
+  const { loading } = useSelector((state) => state.passwordRequest);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -24,12 +21,6 @@ export function ForgotPasswordPage() {
     e.preventDefault();
     dispatch(resetPasswordRequest(email));
   };
-
-  // useEffect(() => {
-  //   if (success) {
-  //     navigate("/reset-password");
-  //   }
-  // }, [success, navigate]);
 
   return (
     <div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import IngredientDetails from "../components/modal/ingredient-details/ingredient-details";
+import IngredientDetails from "../../components/modal/ingredient-details/ingredient-details";
 
 const IngredientDetailsPage = () => {
   const { id } = useParams();

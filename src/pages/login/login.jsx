@@ -2,11 +2,11 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from ".//login.module.css";
+import styles from "../login.module.css";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { loginUser } from "../actions/authActions";
+import { loginUser } from "../../actions/authActions";
 
 export function LoginPage() {
   const [email, setEmail] = useState("");

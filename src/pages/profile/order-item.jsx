@@ -1,4 +1,7 @@
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  CurrencyIcon,
+  FormattedDate,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./profile.module.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,7 +34,10 @@ const OrderItem = ({ order, fromProfile }) => {
       <div className={style.burger_item_box}>
         <div className={style.header}>
           <span className={style.order_number}>#{order.number}</span>
-          <span className={style.timestamp}>{order.createdAt}</span>
+          <FormattedDate
+            date={new Date(order.createdAt)}
+            className={style.timestamp}
+          />
         </div>
         <h1 className={style.title}>{order.name}</h1>
         <div className={style.status}>

@@ -1,6 +1,8 @@
 import style from "./order-information.module.css";
-import stylefeed from "../../../pages/profile/profile.module.css";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  CurrencyIcon,
+  FormattedDate,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderElement from "./order-element/order-element";
 import { useSelector } from "react-redux";
 
@@ -44,7 +46,11 @@ const OrderInformation = ({ order }) => {
         ))}
       </div>
       <div className={style.bottom_container}>
-        <p className={style.time_stamp}>{order.createdAt}</p>
+        {/* <p className={style.time_stamp}>{order.createdAt}</p> */}
+        <FormattedDate
+          date={new Date(order.createdAt)}
+          className={style.time_stamp}
+        />
         <div className={style.price}>
           <p className={style.price_text}>{totalOrderPrice}</p>
           <CurrencyIcon />

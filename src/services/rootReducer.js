@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { constrcutorReducer } from "./constructorReducer";
+import { constructorReducer } from "./constructorReducer";
 import { orderReducer } from "./orderReducer";
 import { loadData } from "./dataLoadReducer";
 import { passwordResetReducer, passwordRequestResetReducer } from "./resetPasswordReducer";
@@ -8,7 +8,7 @@ import { ordersReducer } from "./ordersReducer";
 import { registerReducer } from "./registerReducer";
 
 export const rootReducer = combineReducers({
-    burger: constrcutorReducer,
+    burger: constructorReducer,
     order: orderReducer,
     load: loadData,
     passwordReset: passwordResetReducer,

@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import style from "./feed.module.css";
 import OrderItem from "../profile/order-item";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   closeWsConnection,
@@ -20,10 +19,16 @@ const Feed = () => {
   }, [dispatch]);
 
   const orders = useSelector((state) => state.orders.orders);
-  // console.log(orders);
 
-  const completedOrders = orders.filter((order) => order.status === "done");
-  const inProgressOrders = orders.filter((order) => order.status === "pending");
+  const completedOrders = useMemo(
+    () => orders.filter((order) => order.status === "done"),
+    [orders]
+  );
+
+  const inProgressOrders = useMemo(
+    () => orders.filter((order) => order.status === "pending"),
+    [orders]
+  );
 
   const splitOrders = (orders) => {
     const groups = [];
@@ -70,11 +75,21 @@ const Feed = () => {
             <div className={style.feed_ready}>
               <h2 className={style.info_title}>Готовы:</h2>
               <div className={style.feed_number_column}>
+                {/* {completedOrders.map((order) => (
+                  <p key={order.id} className="text text_type_digits-default">
+                    {order.number}
+                  </p>
+                ))} */}
                 {orderColumns(completedOrderGroups)}
               </div>
             </div>
             <div className={style.feed_stady}>
               <h2 className={style.info_title}>В работе:</h2>
+              {/* {inProgressOrders.map((order) => (
+                <p key={order.id} className="text text_type_digits-default">
+                  {order.number}
+                </p>
+              ))} */}
               {orderColumns(inProgressOrderGroups)}
             </div>
           </div>
