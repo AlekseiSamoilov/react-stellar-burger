@@ -11,6 +11,7 @@ export const registerUser = (userData) => async (dispatch) => {
         });
         dispatch({ type: REGISTER_SUCCESS, payload: data });
     } catch (error) {
-        dispatch({ type: REGISTER_FAILURE, payload: error });
+        let errorMessage = "Ошибка при регистрации, проверьте данные и попробуйте снова."
+        dispatch({ type: REGISTER_FAILURE, payload: errorMessage });
     }
 };

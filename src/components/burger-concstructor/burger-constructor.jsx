@@ -17,11 +17,12 @@ import {
 import DraggableIngredient from "../draggable-ingredient/draggable-ingredient";
 import { useNavigate } from "react-router-dom";
 
-const BurgerConstructor = ({ handleOrder, isLoading }) => {
+const BurgerConstructor = ({ handleOrder }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const burgerSelector = (state) => state.burger;
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoading } = useSelector((state) => state.order);
   const { ingredients, bun, totalPrice } = useSelector(burgerSelector);
   const ingredientsArray = Object.values(ingredients);
 
@@ -130,7 +131,7 @@ const BurgerConstructor = ({ handleOrder, isLoading }) => {
 
 BurgerConstructor.propTypes = {
   handleOrder: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  // isLoading: PropTypes.bool.isRequired,
 };
 
 export default BurgerConstructor;

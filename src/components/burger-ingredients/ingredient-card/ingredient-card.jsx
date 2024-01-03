@@ -7,13 +7,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-const IngredientCard = ({
-  ingredient,
-  openIngredientModal,
-  setSelectedIngredient,
-}) => {
-  const location = useLocation();
+import { useNavigate } from "react-router-dom";
+const IngredientCard = ({ ingredient }) => {
   const navigate = useNavigate();
   const [{ isDragging }, dragRef] = useDrag({
     type: "ingredient",
@@ -33,7 +28,6 @@ const IngredientCard = ({
   });
 
   const handleClick = () => {
-    setSelectedIngredient(ingredient);
     navigate(`/ingredients/${ingredient._id}`, {
       state: { modal: true, ingredient: ingredient },
     });
@@ -61,8 +55,6 @@ const IngredientCard = ({
 
 IngredientCard.propTypes = {
   ingredient: PropTypes.object.isRequired,
-  openIngredientModal: PropTypes.func.isRequired,
-  setSelectedIngredient: PropTypes.func.isRequired,
 };
 
 export default IngredientCard;

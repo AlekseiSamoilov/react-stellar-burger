@@ -27,7 +27,8 @@ export const loginUser = (userData) => async (dispatch) => {
         dispatch({ type: LOGIN_SUCCESS, payload: data });
         dispatch(authCheckComplete());
     } catch (error) {
-        dispatch({ type: LOGIN_FAILURE, payload: error });
+        let errorMessage = 'Произошла ошибка при входе.';
+        dispatch({ type: LOGIN_FAILURE, payload: errorMessage });
         dispatch(authCheckComplete());
     }
 };

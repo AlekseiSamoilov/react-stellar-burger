@@ -12,7 +12,6 @@ export function ResetPasswordPage() {
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { loading, error, success } = useSelector(
     (state) => state.passwordReset
   );

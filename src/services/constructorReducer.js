@@ -1,4 +1,4 @@
-import { ADD_BUN, ADD_INGREDIENT, PLACE_ORDER_FAIL, PLACE_ORDER_START, PLACE_ORDER_SUCCESS, REMOVE_INGREDIENT, RESET_CONSTRUCTOR, SORT_INGREDIENTS, SET_INGREDIENTS } from "../actions/actionTypes";
+import { ADD_BUN, ADD_INGREDIENT, REMOVE_INGREDIENT, RESET_CONSTRUCTOR, SORT_INGREDIENTS, SET_INGREDIENTS } from "../actions/actionTypes";
 
 const initialState = {
     ingredients: [],
@@ -9,7 +9,7 @@ const initialState = {
     order: null,
 };
 
-export function constrcutorWork(state = initialState, action) {
+export function constrcutorReducer(state = initialState, action) {
     switch (action.type) {
         case ADD_INGREDIENT:         
               return {

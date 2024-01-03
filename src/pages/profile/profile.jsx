@@ -48,9 +48,9 @@ const Profile = () => {
           Профиль
         </Link>
         <Link
-          to="order-history"
+          to="orders"
           className={
-            activeLink("order-history") ? style.active : style.navigation_item
+            activeLink("orders") ? style.active : style.navigation_item
           }
         >
           История заказов
@@ -69,7 +69,7 @@ const Profile = () => {
       <div className={style.info_container}>
         <Routes>
           <Route path="profile-info" element={<ProfileInfo />} />
-          <Route path="order-history" element={<OrderHistory />} />
+          <Route path="orders" element={<OrderHistory />} />
           <Route index element={<ProfileInfo />} />
         </Routes>
       </div>

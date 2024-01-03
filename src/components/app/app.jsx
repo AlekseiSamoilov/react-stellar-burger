@@ -16,7 +16,13 @@ import IngredientDetailsPage from "../../pages/ingredientDetailsPage";
 import ModalWrapper from "../modal-wrapper";
 import DataLoader from "../data-loader/data-loader";
 import { useEffect } from "react";
+import Feed from "../../pages/feed/feed";
 import { checkAndRestoreSession } from "../../actions/authActions";
+import Modal from "../modal/modal";
+import OrderInformation from "../modal/order-information/order-information";
+import { useSelector, useDispatch } from "react-redux";
+import { closeModal } from "../../actions/orderActions";
+import OrderDetailsPage from "../../pages/feed/order-details-page";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,6 +30,9 @@ function App() {
   useEffect(() => {
     dispatch(checkAndRestoreSession());
   }, [dispatch]);
+
+  const showModal = useSelector((state) => state.order.showModal);
+  const currentOrder = useSelector((state) => state.orders.currentOrder);
 
   return (
     <BrowserRouter>
@@ -77,8 +86,19 @@ function App() {
               path="/ingredients/:id"
               element={<IngredientDetailsPage />}
             />
+            <Route path="/feed" element={<Feed />} />
+            <Route path="/feed/:number" element={<OrderDetailsPage />} />
+            <Route
+              path="/profile/orders/:number"
+              element={<OrderDetailsPage />}
+            />
             <Route path="/404" element={<PageNotFound />} />
           </Routes>
+          {showModal && currentOrder && (
+            <Modal closeModal={closeModal}>
+              <OrderInformation order={currentOrder} />
+            </Modal>
+          )}
           <ModalWrapper />
         </div>
       </DndProvider>

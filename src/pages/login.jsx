@@ -3,25 +3,18 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from ".//login.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { loginUser } from "../actions/authActions";
 
 export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { isLoading, isError, isLoggedIn } = useSelector((state) => state.auth);
 
-  // console.log(isLoggedIn);
-
-  // useEffect(() => {
-  //   if (!isLoading && !isError && isLoggedIn) {
-  //     navigate("/");
-  //   }
-  // }, [isLoading, isError, isLoggedIn, navigate]);
+  const error = useSelector((state) => state.auth.isError);
+  const errorMessage = useSelector((state) => state.auth.errorMessage);
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -35,6 +28,7 @@ export function LoginPage() {
     <div>
       <div className={styles.container}>
         <h1 className={styles.title}>Вход</h1>
+        {error && <div className={styles.error_message}>{errorMessage}</div>}
         <form onSubmit={handleSubmit}>
           <div className={styles.input_container}>
             <Input

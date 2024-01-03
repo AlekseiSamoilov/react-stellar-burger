@@ -1,6 +1,6 @@
 .constructor_container {
-width: 600px;
-padding: 100px 16px 40px 16px;
+    width: 600px;
+    padding: 100px 16px 40px 16px;
 }
 .ingredient_box {
     display: flex;
