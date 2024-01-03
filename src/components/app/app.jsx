@@ -1,6 +1,7 @@
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import MainWindow from "../main-window/main-window";
+import { Provider, useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
