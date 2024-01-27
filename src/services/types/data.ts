@@ -5,7 +5,7 @@ export type TUserData = {
 }
 
 export interface IUserData {
-    name: string;
+    name?: string;
     email: string;
     password: string;
 }

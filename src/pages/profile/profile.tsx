@@ -12,9 +12,10 @@ import ProfileInfo from "./profile-info";
 import OrderHistory from "./order-history";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import { TDispatch } from "../../services/store";
 
 const Profile: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch: TDispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 

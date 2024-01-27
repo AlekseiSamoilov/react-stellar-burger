@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { FC, useEffect } from "react";
 import { fetchOrderDetails } from "../../actions/ordersActions";
 import { IRootState } from "../../services/rootReducer";
-import { AppDispatch } from "../../services/store";
+import { AppDispatch, TDispatch } from "../../services/store";
 
 const OrderDetailsPage: FC = () => {
   const { number } = useParams<{ number: string | undefined }>();
-  const dispatch = useDispatch();
+  const dispatch: TDispatch = useDispatch();
   const order = useSelector((state: IRootState) => state.orders.currentOrder);
 
   useEffect(() => {

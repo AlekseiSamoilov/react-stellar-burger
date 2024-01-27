@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { registerUser } from "../actions/registerActions";
 import { IRootState } from "../services/rootReducer";
+import { TDispatch } from "../services/store";
 
 export interface IRegisterPageForm {
   name: string;
@@ -17,7 +18,7 @@ export interface IRegisterPageForm {
 
 export function RegisterPage() {
   const [form, setForm] = useState<IRegisterPageForm>({ name: "", email: "", password: "" });
-  const dispatch = useDispatch();
+  const dispatch: TDispatch = useDispatch();
   const error = useSelector((state: IRootState) => state.register.isError);
   const errorMessage = useSelector((state: IRootState) => state.register.errorMessage);
 

@@ -1,4 +1,5 @@
 
+import { TIngredient } from "../services/types";
 import { BASE_URL } from "./constants";
 
 interface IRefreshTokenResponse {
@@ -9,22 +10,21 @@ interface IRefreshTokenResponse {
     refreshToken: string;
 }
 
-interface IErrorResponse {
+export type TServerResponse<T> = {
     success: boolean;
-    accessToken: string;
-    refreshToken: string;
-}
+} & T;
 
-function checkResponse(res: Response): Promise<any> {
+
+const checkResponse = <T>(res: Response): Promise<T> => {
     if (!res.ok) {
         return Promise.reject(`Error: ${res.status}`);
     }
     return res.json();
 }
 
-export function request(url: string, options?: RequestInit): Promise<any> {
-return fetch(`${BASE_URL}${url}`, options)
-.then(checkResponse);
+export async function request<T>(url: string, options?: RequestInit): Promise<T> {
+    const res = await fetch(`${BASE_URL}${url}`, options);
+    return checkResponse<T>(res);
 }
 
 export const refreshToken = async (): Promise<IRefreshTokenResponse> => {
@@ -41,11 +41,11 @@ export const refreshToken = async (): Promise<IRefreshTokenResponse> => {
         
         console.error('Ошибка обновления токена', error);
         throw new Error('Не удалось обновить токен');
-        // return { success: false };
     }
 };
 
-export const fetchWithRefresh = async (url: string, options:RequestInit) => {
+
+export const fetchWithRefresh = async <T>(url: string, options:RequestInit): Promise<TServerResponse<T>> => {
     try {
         const res = await fetch(`${BASE_URL}${url}`, options);
         return await checkResponse(res);

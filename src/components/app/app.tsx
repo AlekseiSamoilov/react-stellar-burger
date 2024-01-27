@@ -21,11 +21,11 @@ import OrderInformation from "../modal/order-information/order-information";
 import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../../actions/orderActions";
 import OrderDetailsPage from "../../pages/feed/order-details-page";
-import { IRootState, TRootState } from "../../services/rootReducer";
-import { AppDispatch } from "../../services/store";
+import { IRootState } from "../../services/rootReducer";
+import {  TDispatch } from "../../services/store";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch: TDispatch = useDispatch();
 
   useEffect(() => {
     dispatch(checkAndRestoreSession());

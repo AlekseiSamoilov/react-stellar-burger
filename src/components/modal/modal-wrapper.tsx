@@ -8,12 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal as closeReduxModal } from "../../actions/orderActions";
 import { TRootState } from "../../services/rootReducer";
 import { Dispatch } from "redux";
+import { AppDispatch } from "../../services/store";
 
 
 function ModalWrapper() {
   const navigate: NavigateFunction = useNavigate();
   const location: Location = useLocation();
-  const dispatch: Dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const isModal = location.state?.modal;
   const modalIngredient = isModal ? location.state.ingredient : undefined;
   const modalOrder = isModal ? location.state.order : undefined;

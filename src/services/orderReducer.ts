@@ -1,6 +1,6 @@
 // orderReducer.js
 import { CLOSE_MODAL, OPEN_MODAL, PLACE_ORDER_FAIL, PLACE_ORDER_START, PLACE_ORDER_SUCCESS } from '../actions/actionTypes';
-import { TCloseModal, TOpenModal, TPlaceOrderFailAction, TPlaceOrderStartAction, TPlaceOrderSuccessAction } from '../actions/orderActions';
+import { TCloseModal, TPlaceOrderFailAction, TPlaceOrderStartAction, TPlaceOrderSuccessAction } from '../actions/orderActions';
 
 export interface IPlaceOrderState {
   order: number | null;
@@ -15,7 +15,6 @@ type TPlaceOrderActions =
   | TPlaceOrderStartAction
   | TPlaceOrderSuccessAction
   | TPlaceOrderFailAction
-  | TOpenModal
   | TCloseModal;
 
 const initialOrderState: IPlaceOrderState = {
@@ -49,12 +48,12 @@ export const orderReducer = (state = initialOrderState, action: TPlaceOrderActio
             isLoading: false,
             error: action.payload,
         };
-    case OPEN_MODAL:
-      console.log(action.payload)
-        return {
-          ...state,
-          showModal: true,
-        };
+    // case OPEN_MODAL:
+    //   console.log(action.payload)
+    //     return {
+    //       ...state,
+    //       showModal: true,
+    //     };
     case CLOSE_MODAL:
 
         return {

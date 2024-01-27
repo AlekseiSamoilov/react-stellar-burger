@@ -8,10 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { resetPasswordRequest } from "../../actions/resetPasswordActions";
 import { IRootState } from "../../services/rootReducer";
+import { TDispatch } from "../../services/store";
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
-  const dispatch = useDispatch();
+  const dispatch: TDispatch = useDispatch();
   const { loading } = useSelector((state: IRootState) => state.passwordRequest);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {

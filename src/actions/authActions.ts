@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { TUserData, IUserData } from "../services/types/data";
-import { fetchWithRefresh, request } from "../utils/request";
+import { TServerResponse, fetchWithRefresh, request } from "../utils/request";
 import { LOGIN_REQUEST, 
          LOGIN_SUCCESS, 
          LOGIN_FAILURE, 
@@ -12,7 +12,7 @@ import { LOGIN_REQUEST,
          UPDATE_USER_FAILURE, 
          AUTH_CHECK_COMPLETE, 
         } from "./actionTypes";
-import { AppDispatch } from "../services/store";
+import { AppDispatch, AppThunk, TDispatch } from "../services/store";
 
 export interface IAuthCheckComplete {
     type: typeof AUTH_CHECK_COMPLETE;
@@ -21,7 +21,8 @@ export interface IAuthCheckComplete {
 type TLoginResponseData = {
     refreshToken: string;
     accessToken: string;
-    user: TUserData;
+    user: IUserData;
+    message?: string;
 }
 
  export interface ILoginRequestAction {
@@ -47,7 +48,7 @@ export interface ILogoutSuccess {
 }
 export interface ILogoutFailure {
     readonly type: typeof LOGOUT_FAILURE;
-    payload: string ;
+    payload: string | undefined;
 }
 
 
@@ -63,10 +64,25 @@ export interface IUpdateUserFailure {
     payload: string;
 }
 
-export const loginUser = (userData: TUserData) => async (dispatch: AppDispatch) => {
-    dispatch<ILoginRequestAction>({ type: LOGIN_REQUEST });
+export type TAuthActions = 
+| ILoginRequestAction
+| ILoginSuccessAction
+| ILoginFailureAction
+| IAuthCheckComplete
+| ILogoutRequest
+| ILoginSuccessAction
+| ILoginFailureAction
+| IUpdateUserRequest
+| IUpdateUserSuccess
+| IUpdateUserFailure;
+
+
+type TCheckAndRestoreSession = TServerResponse<TLoginResponseData>
+
+export const loginUser = (userData: IUserData): AppThunk<Promise<TLoginResponseData>> => async (dispatch: AppDispatch) => {
+    dispatch({ type: LOGIN_REQUEST });
     try {
-        const data: TLoginResponseData = await request('/auth/login', {
+        const data: TLoginResponseData = await request<TCheckAndRestoreSession>('/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -76,20 +92,22 @@ export const loginUser = (userData: TUserData) => async (dispatch: AppDispatch) 
         localStorage.setItem('refreshToken', data.refreshToken);
         localStorage.setItem('token', data.accessToken);
         localStorage.setItem('userData', JSON.stringify(data.user));
-        dispatch<ILoginSuccessAction>({ type: LOGIN_SUCCESS, payload: data });
+        dispatch({ type: LOGIN_SUCCESS, payload: data });
         dispatch(authCheckComplete());
+        return data;
     } catch (error) {
         let errorMessage = 'Произошла ошибка при входе. Проверьте данные.';
-        dispatch<ILoginFailureAction>({ type: LOGIN_FAILURE, payload: errorMessage });
+        dispatch({ type: LOGIN_FAILURE, payload: errorMessage });
         dispatch(authCheckComplete());
+        throw error;
     }
 };
 
-export const logoutUser = () => async (dispatch: AppDispatch) => {
-    dispatch<ILogoutRequest>({ type: LOGOUT_REQUEST });
+export const logoutUser = (): AppThunk => async (dispatch: AppDispatch): Promise<void> => {
+    dispatch({ type: LOGOUT_REQUEST });
     try {
         const refreshToken = localStorage.getItem('refreshToken');
-        const data = await request('/auth/logout', {
+        const data = await request<TCheckAndRestoreSession>('/auth/logout', {
             method: 'POST',
             headers: {
                 "Content-Type": 'application/json',
@@ -100,23 +118,23 @@ export const logoutUser = () => async (dispatch: AppDispatch) => {
             localStorage.removeItem('refreshToken');
             localStorage.removeItem('token');
             localStorage.removeItem('userData');
-            dispatch<ILogoutSuccess>({ type: LOGOUT_SUCCESS, payload: data });
+            dispatch({ type: LOGOUT_SUCCESS, payload: data });
             dispatch(authCheckComplete());
         } else {
-            dispatch<ILogoutFailure>({ type: LOGOUT_FAILURE, payload: data.message });
+            dispatch({ type: LOGOUT_FAILURE, payload: data.message });
         }
     } catch (error) {
         let errorMessage = "Произошла неизвестная ошибка.";
-        dispatch<ILogoutFailure>({ type: LOGOUT_FAILURE, payload: errorMessage });
+        dispatch({ type: LOGOUT_FAILURE, payload: errorMessage });
         dispatch(authCheckComplete());
     }
 };
 
-export const updateUserInfo = (userData: TUserData) => async (dispatch: AppDispatch) => {
-    dispatch<IUpdateUserRequest>({ type: UPDATE_USER_REQUEST });
+export const updateUserInfo = (userData: TUserData): AppThunk<Promise<unknown>> => async (dispatch: AppDispatch): Promise<TCheckAndRestoreSession> => {
+    dispatch({ type: UPDATE_USER_REQUEST });
     try {
         const token = localStorage.getItem('token') || '';
-        const data = await fetchWithRefresh('/auth/user', {
+        const data = await fetchWithRefresh<TCheckAndRestoreSession>('/auth/user', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -125,21 +143,24 @@ export const updateUserInfo = (userData: TUserData) => async (dispatch: AppDispa
             body: JSON.stringify(userData),
         });
         if (data.success) {
-            dispatch<IUpdateUserSuccess>({ type: UPDATE_USER_SUCCESS, payload: data.user });
+            dispatch({ type: UPDATE_USER_SUCCESS, payload: data.user });
             dispatch(authCheckComplete());
             localStorage.setItem('userData', JSON.stringify(data.user));
         } else {
             dispatch({ type: UPDATE_USER_FAILURE, payload: data.message });
         }
+        return data;
     } catch (error) {
         let errorMessage = "Произошла неизвестная ошибка.";
-        dispatch<IUpdateUserFailure>({ type: UPDATE_USER_FAILURE, payload: errorMessage});
+        dispatch({ type: UPDATE_USER_FAILURE, payload: errorMessage});
         dispatch(authCheckComplete());
+        throw error;
     }
 };
 
 
-export const checkAndRestoreSession = () => async (dispatch: AppDispatch) => {
+
+export const checkAndRestoreSession = (): AppThunk => async (dispatch: AppDispatch): Promise<void> => {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -147,19 +168,20 @@ export const checkAndRestoreSession = () => async (dispatch: AppDispatch) => {
         return;
     }
 
-    dispatch<ILoginRequestAction>({ type: LOGIN_REQUEST });
+    dispatch({ type: LOGIN_REQUEST });
 
     try {
-        const response = await fetchWithRefresh('/auth/user', {
+        const response = await fetchWithRefresh<TCheckAndRestoreSession>('/auth/user', {
             method: 'GET',
             headers: { 'Authorization': token },
         });
-        dispatch<ILoginSuccessAction>({ type: LOGIN_SUCCESS, payload: response });
+        dispatch({ type: LOGIN_SUCCESS, payload: response });
         dispatch(authCheckComplete());
     } catch (error) {
         dispatch(authCheckComplete());
     }
 };
+
 
 export const authCheckComplete = (): IAuthCheckComplete => {
     return { type: AUTH_CHECK_COMPLETE };

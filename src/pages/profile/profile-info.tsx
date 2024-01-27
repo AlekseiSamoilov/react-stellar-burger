@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUserInfo } from "../../actions/authActions";
 import { IRootState } from "../../services/rootReducer";
 import { IUserData } from "../../services/types/data";
+import { TDispatch } from "../../services/store";
 
 interface IEditState {
   name: boolean;
@@ -27,7 +28,7 @@ const ProfileInfo: FC = () => {
     password: "",
   });
   const [isEditing, setIsEditing] = useState<IEditState>({ name: false, password: false, email: false});
-  const dispatch = useDispatch();
+  const dispatch: TDispatch = useDispatch();
 
   useEffect(() => {
     if (user) {

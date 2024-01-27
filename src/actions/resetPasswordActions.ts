@@ -1,7 +1,9 @@
 import { RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCES, RESET_PASSWORD_FAILURE, RESET_PASSWORD_BEGIN, PASSWORD_REQUEST_SUCCES, PASSWORD_REQUEST_FAILURE } from "./actionTypes";
-import { request } from "../utils/request";
+import { TServerResponse, request } from "../utils/request";
 import { Dispatch } from "redux";
 import { IResetPasswordState } from "../services/resetPasswordReducer";
+import { AppDispatch, AppThunk } from "../services/store";
+import { TRootState } from "../services/rootReducer";
 
 export type TResetPasswordRequestAction = {
     readonly type: typeof RESET_PASSWORD_REQUEST;
@@ -14,13 +16,25 @@ export type TResetPasswordRequestSuccessAction = {
 
 export type TResetPasswordRequestFailureAction = {
     readonly type: typeof PASSWORD_REQUEST_FAILURE;
-    payload: string;
+    payload: string | undefined;
 }
 
-export const resetPasswordRequest = (email: string) => async (dispatch: Dispatch) => {
+export type TResetPasswordActions = 
+    | TResetPasswordRequestAction
+    | TResetPasswordRequestSuccessAction
+    | TResetPasswordRequestFailureAction
+    | TResetPasswordBeginAction
+    | TResetPasswordFailureAction
+    | TResetPasswordSuccessAction;
+
+type TResetPasswordResponse = TServerResponse <{
+    message?: string;
+} & IResetPasswordState>;
+
+export const resetPasswordRequest = (email: string): AppThunk<Promise<unknown>> => async (dispatch: AppDispatch): Promise<TResetPasswordResponse> => {
     try {
-        dispatch<TResetPasswordRequestAction>({ type: RESET_PASSWORD_REQUEST });
-        const data = await request('/password-reset', {
+        dispatch({ type: RESET_PASSWORD_REQUEST });
+        const data = await request<TResetPasswordResponse>('/password-reset', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,13 +42,15 @@ export const resetPasswordRequest = (email: string) => async (dispatch: Dispatch
             body: JSON.stringify({ email }),
         });
         if (data.success) {
-            dispatch<TResetPasswordRequestSuccessAction>({ type: PASSWORD_REQUEST_SUCCES, payload: data });
+            dispatch({ type: PASSWORD_REQUEST_SUCCES, payload: data });
         } else {
-            dispatch<TResetPasswordRequestFailureAction>({ type: PASSWORD_REQUEST_FAILURE, payload: data.message });
+            dispatch({ type: PASSWORD_REQUEST_FAILURE, payload: data.message });
         }
+        return data;
     } catch (error) {
         let errorMessage = (error instanceof Error) ? error.message : 'Произошла ошибка запроса сброса пароля.'
-        dispatch<TResetPasswordRequestFailureAction>({ type: PASSWORD_REQUEST_FAILURE, payload: errorMessage });
+        dispatch({ type: PASSWORD_REQUEST_FAILURE, payload: errorMessage });
+        throw error;
     }
 };
 
@@ -50,14 +66,14 @@ export type TResetPasswordSuccessAction = {
 
 export type TResetPasswordFailureAction = {
     readonly type: typeof RESET_PASSWORD_FAILURE;
-    payload: string;
+    payload: string | undefined;
 }
 
 
-export const resetPassword = (password: string, token: string) => async (dispatch: Dispatch) => {
+export const resetPassword = (password: string, token: string): AppThunk<Promise<unknown>> => async (dispatch: AppDispatch): Promise<TResetPasswordResponse> => {
     try {
-        dispatch<TResetPasswordBeginAction>({ type: RESET_PASSWORD_BEGIN });
-        const data = await request('/password-reset/reset', {
+        dispatch({ type: RESET_PASSWORD_BEGIN });
+        const data = await request<TResetPasswordResponse>('/password-reset/reset', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -65,11 +81,13 @@ export const resetPassword = (password: string, token: string) => async (dispatc
             body: JSON.stringify({ password, token }),
         });
         if (data.success) {
-            dispatch<TResetPasswordSuccessAction>({ type: RESET_PASSWORD_SUCCES, payload: data });
+            dispatch({ type: RESET_PASSWORD_SUCCES, payload: data });
         } else {
-            dispatch<TResetPasswordFailureAction>({ type: RESET_PASSWORD_FAILURE, payload: data.message });
+            dispatch({ type: RESET_PASSWORD_FAILURE, payload: data.message });
         }
+        return data;
     } catch (error) {
-        dispatch<TResetPasswordFailureAction>({ type: RESET_PASSWORD_FAILURE, payload: error instanceof Error ? error.message : 'Произошла ошибка сброса пароля. Повторите попозже' });
+        dispatch({ type: RESET_PASSWORD_FAILURE, payload: error instanceof Error ? error.message : 'Произошла ошибка сброса пароля. Повторите попозже' });
+        throw error;
     }
 };

@@ -6,6 +6,7 @@ import { OPEN_WS_CONNECTION,
          WS_CONNECTION_SUCCESS 
 } from "../actions/actionTypes";
 import { TCloseWsConnectionAction, TOpenWsConnectionAction, updateOrders } from "../actions/ordersActions";
+import { AppDispatch } from "../services/store";
 
 type TWsActions = TOpenWsConnectionAction | TCloseWsConnectionAction | TWsConnenctionSuccess | TWsConnectionError | TWsConnectionClosed ;
 
@@ -24,7 +25,7 @@ export type TWsConnectionClosed = {
 
 let socket: WebSocket | null = null;
 
-const wsMiddleware = (store: MiddlewareAPI<Dispatch<AnyAction>>) => (next: Dispatch<AnyAction>) => (action: TWsActions) => {
+const wsMiddleware = (store: MiddlewareAPI<AppDispatch>) => (next: AppDispatch) => (action: TWsActions) => {
 
     const onOpen = () => {
         console.log("Feed connection ok");

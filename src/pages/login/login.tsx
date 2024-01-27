@@ -8,13 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { loginUser } from "../../actions/authActions";
 import { IRootState } from "../../services/rootReducer";
-import { AppDispatch } from "../../services/store";
+import { TDispatch } from "../../services/store";
+
 
 
 export const LoginPage: FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
+  const dispatch: TDispatch = useDispatch();
 
   const error = useSelector((state: IRootState) => state.auth.isError);
   const errorMessage = useSelector((state: IRootState) => state.auth.errorMessage);

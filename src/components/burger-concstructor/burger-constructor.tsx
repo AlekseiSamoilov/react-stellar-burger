@@ -19,6 +19,7 @@ import { TIngredient } from "../../services/types";
 import { Dispatch } from "redux";
 import { IRootState } from "../../services/rootReducer";
 import { TConstructorActions } from "../../services/constructorReducer";
+import { TDispatch } from "../../services/store";
 
 type TBurgerConstructorDispatch = Dispatch<TConstructorActions>
 
@@ -28,7 +29,7 @@ interface IBurgerConstructorProps {
 
 const BurgerConstructor: FC<IBurgerConstructorProps> = ({ handleOrder }) => {
 
-  const dispatch = useDispatch<TBurgerConstructorDispatch>();
+  const dispatch: TDispatch = useDispatch<TBurgerConstructorDispatch>();
   const navigate = useNavigate(); 
   const burgerSelector = (state: IRootState) => state.burger; 
   const { isLoggedIn } = useSelector((state: IRootState) => state.auth); 

@@ -4,26 +4,27 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-concstructor/burger-constructor";
 import { useDispatch, useSelector } from "react-redux";
 import { Location, useLocation } from "react-router-dom";
-import { openModal, placeOrder } from "../../actions/orderActions";
+import { placeOrder } from "../../actions/orderActions";
 import { IRootState, TRootState } from "../../services/rootReducer";
 import { AnyAction, Dispatch } from "redux";
 import { ThunkDispatch } from "redux-thunk";
+import { TDispatch } from "../../services/store";
 
 function MainWindow() {
   const { ingredients, bun } = useSelector((state: IRootState) => state.burger);
-  const dispatch: ThunkDispatch<TRootState, any, AnyAction> = useDispatch();
-  const location: Location = useLocation();
-  const background = location.state && location.state.background;
+  const dispatch: TDispatch = useDispatch();
+  // const location: Location = useLocation();
+  // const background = location.state && location.state.background;
 
-  const openIngredientModal = () => {
-    dispatch(openModal("ingredient"));
-  };
+  // const openIngredientModal = () => {
+  //   dispatch(openModal("ingredient"));
+  // };
 
-  useEffect(() => {
-    if (background) {
-      openIngredientModal();
-    }
-  }, [background, openIngredientModal]);
+  // useEffect(() => {
+  //   if (background) {
+  //     openIngredientModal();
+  //   }
+  // }, [background, openIngredientModal]);
 
   const handleOrder = () => {
     const ingredientIds = bun ? [bun._id] : [];

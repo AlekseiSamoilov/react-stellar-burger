@@ -3,6 +3,7 @@ import { CLOSE_USER_WS_CONNECTION, OPEN_USER_WS_CONNECTION, USER_WS_CONNECTION_C
 import { TCloseUserWsConnectionAction, TOpenUserWsConnectionAction, TUpdateUserOrders, updateUserOrders } from "../actions/userActions";
 import { Dispatch } from "redux";
 import { TRootState } from "../services/rootReducer";
+import { AppDispatch } from "../services/store";
 
 type TUserWsActions = TOpenUserWsConnectionAction | TCloseUserWsConnectionAction | TUpdateUserOrders | TUserWsConnectionSuccess | TUserWsConnectionError | TUserWsConnectionClose;
 
@@ -18,7 +19,7 @@ export type TUserWsConnectionClose = {
 
 let socket: WebSocket | null = null;
 
-const wsUserMiddleware = (store: MiddlewareAPI<Dispatch<AnyAction>, TRootState>) => (next: Dispatch<AnyAction>) => (action: TUserWsActions) => {
+const wsUserMiddleware = (store: MiddlewareAPI<AppDispatch, TRootState>) => (next: AppDispatch) => (action: TUserWsActions) => {
 
     const onOpen = () => {
         console.log("User connection ok");

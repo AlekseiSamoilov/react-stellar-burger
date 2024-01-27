@@ -1,8 +1,8 @@
-import { PLACE_ORDER_START, PLACE_ORDER_SUCCESS, PLACE_ORDER_FAIL, CLOSE_MODAL, OPEN_MODAL } from "./actionTypes";
-import { fetchWithRefresh } from "../utils/request";
-import { TResetConstructorAction, resetConstructor } from "./constructorActions";
-import { TIngredient } from "../services/types";
-import { Dispatch } from "redux";
+import { PLACE_ORDER_START, PLACE_ORDER_SUCCESS, PLACE_ORDER_FAIL, CLOSE_MODAL } from "./actionTypes";
+import { TServerResponse, fetchWithRefresh } from "../utils/request";
+import { resetConstructor } from "./constructorActions";
+import { AppDispatch, AppThunk } from "../services/store";
+import { IOrdersDetails } from "../services/types/data";
 
 export type TPlaceOrderStartAction = {
   readonly type: typeof PLACE_ORDER_START;
@@ -18,14 +18,20 @@ export type TPlaceOrderFailAction = {
   payload: string;
 }
 
-export type TOpenModal = {
-  readonly type: typeof OPEN_MODAL;
-  payload: any;
-}
+type TOrderResponse = TServerResponse <{
+  message?: string;
+  order: IOrdersDetails;
+}>
+
 
 export type TCloseModal = {
   readonly type: typeof CLOSE_MODAL;
 }
+
+export type TOrderActions = 
+| TPlaceOrderStartAction
+| TPlaceOrderSuccessAction
+| TPlaceOrderFailAction;
 
 export const placeOrderStart = (): TPlaceOrderStartAction => ({
     type: PLACE_ORDER_START,
@@ -41,20 +47,15 @@ export const placeOrderFail = (error: string): TPlaceOrderFailAction => ({
     payload: error,
 });
 
-export const openModal = (modalContent: any): TOpenModal => ({
-    type: OPEN_MODAL,
-    payload: modalContent,
-});
-
 export const closeModal = (): TCloseModal => ({
     type: CLOSE_MODAL,
 });
 
-export const placeOrder = (ingredients: string[]) => async (dispatch: Dispatch) => {
+export const placeOrder = (ingredients: string[]): AppThunk => async (dispatch: AppDispatch): Promise<TOrderResponse> => {
     const token = localStorage.getItem("token");
-    dispatch<TPlaceOrderStartAction>(placeOrderStart());
+    dispatch(placeOrderStart());
     try {
-      const result = await fetchWithRefresh("/orders", {
+      const result = await fetchWithRefresh<TOrderResponse>("/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,11 +63,12 @@ export const placeOrder = (ingredients: string[]) => async (dispatch: Dispatch) 
         },
         body: JSON.stringify({ ingredients }),
       });
-      dispatch<TPlaceOrderSuccessAction>(placeOrderSuccess(result.order.number));
-      dispatch<TResetConstructorAction>(resetConstructor());
-
+      dispatch(placeOrderSuccess(result.order.number));
+      dispatch(resetConstructor());
+      return result;
     } catch (error) {
       let errorMessage: string = error instanceof Error ? error.message : "Произошла чудовищная ошибка!";
-      dispatch<TPlaceOrderFailAction>(placeOrderFail(errorMessage));
+      dispatch(placeOrderFail(errorMessage));
+      throw error;
     }
 };

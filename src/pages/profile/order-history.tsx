@@ -7,9 +7,10 @@ import {
   openUserWsConnection,
 } from "../../actions/userActions";
 import { IRootState } from "../../services/rootReducer";
+import { TDispatch } from "../../services/store";
 
 const OrderHistory: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch: TDispatch = useDispatch();
   const orders = useSelector((state: IRootState) => state.orders.userOrders);
 
   useEffect(() => {

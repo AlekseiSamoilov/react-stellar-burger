@@ -7,11 +7,12 @@ import { ChangeEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPassword } from "../actions/resetPasswordActions";
 import { IRootState } from "../services/rootReducer";
+import { TDispatch } from "../services/store";
 
 export function ResetPasswordPage() {
   const [password, setPassword] = useState<string>("");
   const [token, setToken] = useState<string>("");
-  const dispatch = useDispatch();
+  const dispatch: TDispatch = useDispatch();
   const { loading } = useSelector((state: IRootState) => state.passwordReset);
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);

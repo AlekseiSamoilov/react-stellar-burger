@@ -7,8 +7,8 @@ export interface IConstructorState {
   bun: IIngredientsData | null;
   totalPrice: number;
   allIngredients: IIngredientsData[];
-  currentIngredient: any;
-  order: any;
+  currentIngredient: IIngredientsData | null;
+  order: number | null;
 }
 
 export type TConstructorActions = 
