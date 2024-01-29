@@ -1,8 +1,7 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./order-element.module.css";
-import { useSelector } from "react-redux";
-import { IRootState } from "../../../../services/rootReducer";
 import { FC } from "react";
+import { useAppSelector } from "../../../../hooks/useAppSelector";
 
 interface IOrderElementProps {
   ingredientId: string;
@@ -10,7 +9,7 @@ interface IOrderElementProps {
 }
 
 const OrderElement: FC<IOrderElementProps> = ({ ingredientId, count }) => {
-  const ingredientsData = useSelector((state: IRootState) => state.load.allIngredients);
+  const ingredientsData = useAppSelector(state => state.load.allIngredients);
   const ingredient = ingredientsData.find((item) => item._id === ingredientId);
   return (
     <div className={style.element_container}>

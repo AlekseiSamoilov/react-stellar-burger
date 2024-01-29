@@ -1,17 +1,16 @@
 import style from "./profile.module.css";
 import OrderItem from "./order-item";
-import { useDispatch, useSelector } from "react-redux";
 import { FC, useEffect } from "react";
 import {
   closeUserWsConnection,
   openUserWsConnection,
 } from "../../actions/userActions";
-import { IRootState } from "../../services/rootReducer";
-import { TDispatch } from "../../services/store";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 const OrderHistory: FC = () => {
-  const dispatch: TDispatch = useDispatch();
-  const orders = useSelector((state: IRootState) => state.orders.userOrders);
+  const dispatch = useAppDispatch();
+  const orders = useAppSelector(state => state.orders.userOrders);
 
   useEffect(() => {
     dispatch(openUserWsConnection());

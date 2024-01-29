@@ -4,12 +4,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./profile.module.css";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { setCurrentOrder } from "../../actions/ordersActions";
-import { IRootState } from "../../services/rootReducer";
 import { FC } from "react";
 import { IOrdersDetails } from "../../services/types/data";
-import { TDispatch } from "../../services/store";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 interface IOrderItemProps {
   order: IOrdersDetails
@@ -18,8 +17,8 @@ interface IOrderItemProps {
 
 const OrderItem: FC<IOrderItemProps> = ({ order, fromProfile }) => {
   const navigate = useNavigate();
-  const dispatch: TDispatch = useDispatch();
-  const ingredientsData = useSelector((state: IRootState) => state.load.allIngredients);
+  const dispatch = useAppDispatch();
+  const ingredientsData = useAppSelector(state => state.load.allIngredients);
 
   const ingredientsPrice = order.ingredients.map(
     (id) => ingredientsData.find((ingredient) => ingredient._id === id.toString())?.price

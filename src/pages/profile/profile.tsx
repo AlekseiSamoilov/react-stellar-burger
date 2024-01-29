@@ -10,12 +10,11 @@ import {
 } from "react-router-dom";
 import ProfileInfo from "./profile-info";
 import OrderHistory from "./order-history";
-import { useDispatch } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { TDispatch } from "../../services/store";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 const Profile: FC = () => {
-  const dispatch: TDispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 

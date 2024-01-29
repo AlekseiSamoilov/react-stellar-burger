@@ -4,16 +4,15 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from ".//login.module.css";
 import { ChangeEvent, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { resetPassword } from "../actions/resetPasswordActions";
-import { IRootState } from "../services/rootReducer";
-import { TDispatch } from "../services/store";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import { useAppSelector } from "../hooks/useAppSelector";
 
 export function ResetPasswordPage() {
   const [password, setPassword] = useState<string>("");
   const [token, setToken] = useState<string>("");
-  const dispatch: TDispatch = useDispatch();
-  const { loading } = useSelector((state: IRootState) => state.passwordReset);
+  const dispatch = useAppDispatch();
+  const { loading } = useAppSelector(state => state.passwordReset);
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
   const handleTokenChange = (e: ChangeEvent<HTMLInputElement>) => setToken(e.target.value);

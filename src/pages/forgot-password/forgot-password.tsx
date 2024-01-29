@@ -4,16 +4,15 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../login.module.css";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { resetPasswordRequest } from "../../actions/resetPasswordActions";
-import { IRootState } from "../../services/rootReducer";
-import { TDispatch } from "../../services/store";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
-  const dispatch: TDispatch = useDispatch();
-  const { loading } = useSelector((state: IRootState) => state.passwordRequest);
+  const dispatch = useAppDispatch();
+  const { loading } = useAppSelector(state => state.passwordRequest);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);

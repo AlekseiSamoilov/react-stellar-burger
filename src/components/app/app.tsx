@@ -13,26 +13,25 @@ import ProtectedRouteElement from "../protected-route-element/protected-route-el
 import IngredientDetailsPage from "../../pages/ingredient-detail-page/ingredientDetailsPage";
 import ModalWrapper from "../modal/modal-wrapper";
 import DataLoader from "../data-loader/data-loader";
-import { Dispatch, useEffect } from "react";
+import { useEffect } from "react";
 import Feed from "../../pages/feed/feed";
 import { checkAndRestoreSession } from "../../actions/authActions";
 import Modal from "../modal/modal";
 import OrderInformation from "../modal/order-information/order-information";
-import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../../actions/orderActions";
 import OrderDetailsPage from "../../pages/feed/order-details-page";
-import { IRootState } from "../../services/rootReducer";
-import {  TDispatch } from "../../services/store";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 function App() {
-  const dispatch: TDispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(checkAndRestoreSession());
   }, [dispatch]);
 
-  const showModal = useSelector((state: IRootState) => state.order.showModal);
-  const currentOrder = useSelector((state: IRootState) => state.orders.currentOrder);
+  const showModal = useAppSelector(state => state.order.showModal);
+  const currentOrder = useAppSelector(state => state.orders.currentOrder);
 
   return (
     <BrowserRouter>

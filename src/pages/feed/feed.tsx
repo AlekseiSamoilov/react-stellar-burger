@@ -1,18 +1,16 @@
 import React, { FC, useEffect, useMemo } from "react";
 import style from "./feed.module.css";
 import OrderItem from "../profile/order-item";
-import { useDispatch, useSelector } from "react-redux";
 import {
   closeWsConnection,
   openWsConnection,
 } from "../../actions/ordersActions";
-import { IRootState } from "../../services/rootReducer";
 import { IOrdersDetails } from "../../services/types/data";
-import { Dispatch } from "redux";
-import { AppDispatch } from "../../services/store";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 const Feed: FC = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(openWsConnection());
@@ -22,7 +20,7 @@ const Feed: FC = () => {
     };
   }, [dispatch]);
 
-  const orders = useSelector((state: IRootState) => state.orders.orders);
+  const orders = useAppSelector(state => state.orders.orders);
 
   const completedOrders = useMemo(
     () => orders.filter((order) => order.status === "done"),

@@ -1,15 +1,14 @@
 import { FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import IngredientDetails from "../../components/modal/ingredient-details/ingredient-details";
-import { IRootState } from "../../services/rootReducer";
 import { IIngredientsData } from "../../services/types";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 const IngredientDetailsPage: FC = () => {
   const { id } = useParams();
-  const ingredients = useSelector((state: IRootState) => state.load.allIngredients);
+  const ingredients = useAppSelector(state => state.load.allIngredients);
   const [ingredient, setIngredient] = useState<IIngredientsData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const location = useLocation();
   const isModal = location.state?.modal;
 

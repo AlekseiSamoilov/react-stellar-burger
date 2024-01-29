@@ -2,16 +2,15 @@ import IngredientCard from "./ingredient-card/ingredient-card";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useMemo, useRef, useState, useEffect, FC } from "react";
 import styles from "./burger-ingredients.module.css";
-import { useSelector } from "react-redux";
 import { TIngredient } from "../../services/types";
-import { IRootState } from "../../services/rootReducer";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 
 const BurgerIngredients: FC = () => {
   const [currentTab, setCurrentTab] = useState<string>("bun");
-  const { allIngredients } = useSelector((state: IRootState) => state.load);
+  const { allIngredients } = useAppSelector(state => state.load);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { ingredients } = useSelector((state: IRootState) => state.burger);
+  const { ingredients } = useAppSelector(state => state.burger);
 
   const handleScroll = () => {
     const container = containerRef.current as HTMLElement | null;

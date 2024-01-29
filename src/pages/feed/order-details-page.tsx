@@ -1,15 +1,14 @@
 import OrderInformation from "../../components/modal/order-information/order-information";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { FC, useEffect } from "react";
 import { fetchOrderDetails } from "../../actions/ordersActions";
-import { IRootState } from "../../services/rootReducer";
-import { AppDispatch, TDispatch } from "../../services/store";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 const OrderDetailsPage: FC = () => {
   const { number } = useParams<{ number: string | undefined }>();
-  const dispatch: TDispatch = useDispatch();
-  const order = useSelector((state: IRootState) => state.orders.currentOrder);
+  const dispatch = useAppDispatch();
+  const order = useAppSelector(state => state.orders.currentOrder);
 
   useEffect(() => {
     if (number) { 

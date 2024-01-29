@@ -4,11 +4,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from ".//login.module.css";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { registerUser } from "../actions/registerActions";
-import { IRootState } from "../services/rootReducer";
-import { TDispatch } from "../services/store";
+import { useAppSelector } from "../hooks/useAppSelector";
+import { useAppDispatch } from "../hooks/useAppDispatch";
 
 export interface IRegisterPageForm {
   name: string;
@@ -18,9 +17,9 @@ export interface IRegisterPageForm {
 
 export function RegisterPage() {
   const [form, setForm] = useState<IRegisterPageForm>({ name: "", email: "", password: "" });
-  const dispatch: TDispatch = useDispatch();
-  const error = useSelector((state: IRootState) => state.register.isError);
-  const errorMessage = useSelector((state: IRootState) => state.register.errorMessage);
+  const dispatch = useAppDispatch();
+  const error = useAppSelector(state => state.register.isError);
+  const errorMessage = useAppSelector(state => state.register.errorMessage);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });

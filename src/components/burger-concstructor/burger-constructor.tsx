@@ -5,7 +5,6 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import {
   addBun,
@@ -16,25 +15,23 @@ import {
 import DraggableIngredient from "../draggable-ingredient/draggable-ingredient";
 import { useNavigate } from "react-router-dom";
 import { TIngredient } from "../../services/types";
-import { Dispatch } from "redux";
 import { IRootState } from "../../services/rootReducer";
-import { TConstructorActions } from "../../services/constructorReducer";
-import { TDispatch } from "../../services/store";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
-type TBurgerConstructorDispatch = Dispatch<TConstructorActions>
+// type TBurgerConstructorDispatch = Dispatch<TConstructorActions>
 
 interface IBurgerConstructorProps {
   handleOrder: () => void;
 }
 
 const BurgerConstructor: FC<IBurgerConstructorProps> = ({ handleOrder }) => {
-
-  const dispatch: TDispatch = useDispatch<TBurgerConstructorDispatch>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate(); 
   const burgerSelector = (state: IRootState) => state.burger; 
-  const { isLoggedIn } = useSelector((state: IRootState) => state.auth); 
-  const { isLoading } = useSelector((state: IRootState) => state.order); 
-  const { ingredients, bun, totalPrice } = useSelector(burgerSelector); 
+  const { isLoggedIn } = useAppSelector(state  => state.auth);
+  const { isLoading } = useAppSelector(state => state.order);
+  const { ingredients, bun, totalPrice } = useAppSelector(burgerSelector); 
   const ingredientsArray: Array<TIngredient> = Object.values(ingredients); 
 
   const hadnleButtonClick = () => {

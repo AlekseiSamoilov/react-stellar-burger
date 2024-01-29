@@ -1,11 +1,9 @@
 // DataLoader.jsx
 import { FC, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { TServerResponse, request } from "../../utils/request";
 import { setIngredients } from "../../actions/dataLoadActions";
-import { Dispatch } from "redux";
-import { AppDispatch } from "../../services/store";
 import { IIngredientsData } from "../../services/types";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 type TDataLoaderResponse = TServerResponse<{
   message?: string;
@@ -13,7 +11,7 @@ type TDataLoaderResponse = TServerResponse<{
 }>
 
 const DataLoader: FC = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     request<TDataLoaderResponse>("/ingredients")

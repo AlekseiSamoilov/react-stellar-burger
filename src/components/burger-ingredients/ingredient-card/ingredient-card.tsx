@@ -5,11 +5,10 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { TIngredient } from "../../../services/types";
 import { IIngredientCardProps } from "../../../services/types";
-import { IRootState } from "../../../services/rootReducer";
+import { useAppSelector } from "../../../hooks/useAppSelector";
 
 
 
@@ -24,7 +23,7 @@ const IngredientCard: FC<IIngredientCardProps> = ({ ingredient }) => {
   });
   const opacity = isDragging ? 0.5 : 1;
 
-  const ingredientCount = useSelector((state: IRootState) => { 
+  const ingredientCount = useAppSelector(state => { 
     const countIngredients = state.burger.ingredients.filter(
       (i: TIngredient) => i._id === ingredient._id
     ).length;

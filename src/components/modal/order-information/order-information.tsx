@@ -4,19 +4,16 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderElement from "./order-element/order-element";
-import { useSelector } from "react-redux";
-import { IRootState } from "../../../services/rootReducer";
 import { FC } from "react";
 import { IOrdersDetails } from "../../../services/types/data";
+import { useAppSelector } from "../../../hooks/useAppSelector";
 
 interface IOrderInformationProps {
   order: IOrdersDetails;
 }
 
 const OrderInformation: FC<IOrderInformationProps> = ({ order }) => {
-  const ingredientsData = useSelector(
-    (state: IRootState) => state.load.allIngredients
-  );
+  const ingredientsData = useAppSelector(state => state.load.allIngredients);
   const ingredientCounts = order.ingredients.reduce((acc: {[key: string]: number}, id: number) => {
     const ingredient = ingredientsData.find((item) => item._id === id.toString());
     if (ingredient && ingredient.type === "bun") {

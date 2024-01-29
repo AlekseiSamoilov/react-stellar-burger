@@ -1,5 +1,4 @@
 
-import { TIngredient } from "../services/types";
 import { BASE_URL } from "./constants";
 
 interface IRefreshTokenResponse {

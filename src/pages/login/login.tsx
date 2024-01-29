@@ -4,21 +4,20 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../login.module.css";
 import { FC, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { loginUser } from "../../actions/authActions";
-import { IRootState } from "../../services/rootReducer";
-import { TDispatch } from "../../services/store";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 
 
 export const LoginPage: FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch: TDispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const error = useSelector((state: IRootState) => state.auth.isError);
-  const errorMessage = useSelector((state: IRootState) => state.auth.errorMessage);
+  const error = useAppSelector(state => state.auth.isError);
+  const errorMessage = useAppSelector(state => state.auth.errorMessage);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);

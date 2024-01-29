@@ -6,11 +6,10 @@ import {
 import style from "./profile.module.css";
 
 import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { updateUserInfo } from "../../actions/authActions";
-import { IRootState } from "../../services/rootReducer";
 import { IUserData } from "../../services/types/data";
-import { TDispatch } from "../../services/store";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 
 interface IEditState {
   name: boolean;
@@ -19,7 +18,7 @@ interface IEditState {
 }
 
 const ProfileInfo: FC = () => {
-  const authState = useSelector((state: IRootState) => state.auth);
+  const authState = useAppSelector(state => state.auth);
   const { user } = authState;
 
   const [editData, setEditData] = useState<IUserData>({
@@ -28,7 +27,7 @@ const ProfileInfo: FC = () => {
     password: "",
   });
   const [isEditing, setIsEditing] = useState<IEditState>({ name: false, password: false, email: false});
-  const dispatch: TDispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (user) {

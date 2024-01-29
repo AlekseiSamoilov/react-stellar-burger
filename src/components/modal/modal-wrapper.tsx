@@ -4,22 +4,20 @@ import Modal from "./modal";
 import IngredientDetails from "./ingredient-details/ingredient-details";
 import OrderInformation from "./order-information/order-information";
 import OrderDetails from "./order-details/order-details";
-import { useDispatch, useSelector } from "react-redux";
 import { closeModal as closeReduxModal } from "../../actions/orderActions";
-import { TRootState } from "../../services/rootReducer";
-import { Dispatch } from "redux";
-import { AppDispatch } from "../../services/store";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 
 function ModalWrapper() {
   const navigate: NavigateFunction = useNavigate();
   const location: Location = useLocation();
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isModal = location.state?.modal;
   const modalIngredient = isModal ? location.state.ingredient : undefined;
   const modalOrder = isModal ? location.state.order : undefined;
-  const orderData = useSelector((state: TRootState) => state.order.orderNumber);
-  const showOrderDetails = useSelector((state: TRootState) => state.order.showOrderDetails);
+  const orderData = useAppSelector(state => state.order.orderNumber);
+  const showOrderDetails = useAppSelector(state => state.order.showOrderDetails);
 
   const closeModal = () => {
     if (showOrderDetails) {

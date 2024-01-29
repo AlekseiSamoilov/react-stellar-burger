@@ -1,7 +1,6 @@
 import { AnyAction, MiddlewareAPI } from "redux";
 import { CLOSE_USER_WS_CONNECTION, OPEN_USER_WS_CONNECTION, USER_WS_CONNECTION_CLOSED, USER_WS_CONNECTION_ERROR, USER_WS_CONNECTION_SUCCESS } from "../actions/actionTypes";
 import { TCloseUserWsConnectionAction, TOpenUserWsConnectionAction, TUpdateUserOrders, updateUserOrders } from "../actions/userActions";
-import { Dispatch } from "redux";
 import { TRootState } from "../services/rootReducer";
 import { AppDispatch } from "../services/store";
 
